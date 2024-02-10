@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../store/slices/items';
 
 
-const CartItem = () => {
+const CartItem = ({ title, description }) => {
     const cartItems = useSelector((state) => state.cart.items)
     const dispatch = useDispatch();
 
@@ -16,8 +16,8 @@ const CartItem = () => {
             <Card.Content style={[AppStyles.row, styles.cardRow]}>
                 <View style={[AppStyles.row, styles.cardRow]}>
                     <View style={styles.info}>
-                        <Text variant="bodyMedium">Dal</Text>
-                        <Text variant="bodyMedium">A simple Dal made with love</Text>
+                        <Text variant="bodyMedium">{title}</Text>
+                        <Text variant="bodyMedium">{description}</Text>
                     </View>
                     {/* <Image style={{ width: 80, height: 80, borderRadius: 10 }} resizeMethod='cover' source={{ uri: 'https://picsum.photos/700' }} /> */}
 

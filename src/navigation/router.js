@@ -1,4 +1,4 @@
-import { StyleSheet, v } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dashboard, Login, Splash } from '../pages';
@@ -8,6 +8,10 @@ import StoreDetail from '../pages/store/StoreDetail';
 import Stores from '../pages/store';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Account, Address, Orders, Profile } from '../pages/account';
+import Cart from '../pages/cart';
+import Delivery from '../assets/icons/Delivery';
+import CartIcon from "../assets/icons/Cart"
+import AccountIcon from "../assets/icons/Account"
 
 const Stack = createNativeStackNavigator();
 const BottomStack = createNativeStackNavigator();
@@ -64,7 +68,7 @@ const StoreStackRouter = () => {
                 component={Dashboard}
                 options={{
                     headerShown: false,
-                    gestureEnabled: false
+                    gestureEnabled: false,
                 }}
             />
 
@@ -72,7 +76,8 @@ const StoreStackRouter = () => {
                 name={SCREEN.STOREDETAIL}
                 component={StoreDetail}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
+                    title: 'Restaurant Name',
                     gestureEnabled: false
                 }}
             />
@@ -90,16 +95,18 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Delivery'
+                    tabBarLabel: 'Delivery',
+                    tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? color : '#999'} />)
                 }}
             />
             <Tab.Screen
-                name={SCREEN.ADDTOCART}
-                component={AddtoCart}
+                name={SCREEN.CART}
+                component={Cart}
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Cart'
+                    tabBarLabel: 'Cart',
+                    tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? color : '#999'} />)
                 }}
             />
             <Tab.Screen
@@ -108,7 +115,8 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Account'
+                    tabBarLabel: 'Account',
+                    tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? color : '#999'} />)
                 }}
             />
 

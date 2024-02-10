@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 
 
+const data = [
+    { title: 'Dal', description: 'This is simple and special Dal. ' },
+    { title: 'Roti', description: 'This is simple and special Roti. ' },
+    { title: 'Butter Roti', description: 'This is simple and special Butter Roti. ' },
+    { title: 'Kadhai Paneer', description: 'This is simple and special dhai Paneer. ' },
+    { title: 'Frid Rice', description: 'This is simple and special Frid Rice. ' }
+]
 
 
 
@@ -11,7 +18,10 @@ const StoreDetail = () => {
 
     return (
         <Layout>
-            <CartItem />
+            <FlatList
+                data={data}
+                renderItem={({ item, index }) => <CartItem key={index} {...item} />}
+            />
 
         </Layout>
     )
