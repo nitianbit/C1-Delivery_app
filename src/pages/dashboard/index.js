@@ -2,32 +2,26 @@ import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { Button, Card, Text } from 'react-native-paper';
+import { SCREEN } from '../../navigation/utils';
 
 
 
 
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
 
-    const handleChange = (key, value) => {
-        console.log({ key, value })
-    }
+    const handleChange = () => navigation.navigate(SCREEN.STOREDETAIL);
 
 
     return (
-        <Layout>
+        <Layout style={styles.layout}>
             <Card onPress={handleChange} style={styles.card}>
                 <Card.Content>
-                    <Text variant="titleLarge">  title</Text>
-                    <Text variant="bodyMedium">  content</Text>
+                    <Text variant="titleLarge">Restaurant Name</Text>
+                    <Text variant="bodyMedium" style={styles.desc}>Restaurant Description</Text>
                 </Card.Content>
                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                <Card.Actions>
-                    <Button>Cancel</Button>
-                    <Button>Ok</Button>
-                </Card.Actions>
             </Card>
-
         </Layout>
     )
 }
@@ -50,5 +44,11 @@ const styles = StyleSheet.create({
     card: {
         width: '100%',
         marginVertical: 10
+    },
+    desc: {
+        marginBottom: 10
+    },
+    layout: {
+        justifyContent: 'flex-start'
     }
 })

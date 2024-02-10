@@ -6,14 +6,120 @@ import { SCREEN } from './utils';
 import AddtoCart from '../pages/cart/AddtoCart';
 import StoreDetail from '../pages/store/StoreDetail';
 import Stores from '../pages/store';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Account, Address, Orders, Profile } from '../pages/account';
 
 const Stack = createNativeStackNavigator();
+const BottomStack = createNativeStackNavigator();
+const StoreStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
+
+const AccountRouter = () => {
+    return (
+        <BottomStack.Navigator initialRouteName={SCREEN.ACCOUNT}>
+            <BottomStack.Screen
+                name={SCREEN.ACCOUNT}
+                component={Account}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+
+            <BottomStack.Screen
+                name={SCREEN.PROFILE}
+                component={Profile}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+            <BottomStack.Screen
+                name={SCREEN.ADDRESS}
+                component={Address}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+            <BottomStack.Screen
+                name={SCREEN.ORDERS}
+                component={Orders}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+
+        </BottomStack.Navigator>
+    )
+}
+const StoreStackRouter = () => {
+    return (
+        <StoreStack.Navigator initialRouteName={SCREEN.DASHBOARD}>
+            <StoreStack.Screen
+                name={SCREEN.DASHBOARD}
+                component={Dashboard}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+
+            <StoreStack.Screen
+                name={SCREEN.STOREDETAIL}
+                component={StoreDetail}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
+
+        </StoreStack.Navigator>
+    )
+}
+
+function Tabs() {
+    return (
+        <Tab.Navigator initialRouteName={SCREEN.STORESTACKSCREEN}>
+            <Tab.Screen
+                name={SCREEN.STORESTACKSCREEN}
+                component={StoreStackRouter}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                    tabBarLabel: 'Delivery'
+                }}
+            />
+            <Tab.Screen
+                name={SCREEN.ADDTOCART}
+                component={AddtoCart}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                    tabBarLabel: 'Cart'
+                }}
+            />
+            <Tab.Screen
+                name={SCREEN.ACCOUNTSTACKSCREEN}
+                component={AccountRouter}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                    tabBarLabel: 'Account'
+                }}
+            />
+
+
+        </Tab.Navigator>
+    );
+}
 
 const router = () => {
     return (
-        <Stack.Navigator initialRouteName={SCREEN.STOREDETAIL}>
+        <Stack.Navigator initialRouteName={SCREEN.TABS}>
             <Stack.Screen
                 name={SCREEN.SPLASH}
                 component={Splash}
@@ -32,37 +138,14 @@ const router = () => {
                 }}
             />
             <Stack.Screen
-                name={SCREEN.DASHBOARD}
-                component={Dashboard}
+                name={SCREEN.TABS}
+                component={Tabs}
                 options={{
                     headerShown: false,
                     gestureEnabled: false
                 }}
             />
-            <Stack.Screen
-                name={SCREEN.ADDTOCART}
-                component={AddtoCart}
-                options={{
-                    headerShown: false,
-                    gestureEnabled: false
-                }}
-            />
-            <Stack.Screen
-                name={SCREEN.STORES}
-                component={Stores}
-                options={{
-                    headerShown: false,
-                    gestureEnabled: false
-                }}
-            />
-            <Stack.Screen
-                name={SCREEN.STOREDETAIL}
-                component={StoreDetail}
-                options={{
-                    headerShown: false,
-                    gestureEnabled: false
-                }}
-            />
+
         </Stack.Navigator>
     )
 }
