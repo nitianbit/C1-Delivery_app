@@ -22,25 +22,27 @@ const StoreDetail = () => {
     return (
         <Layout>
             <Card style={styles.card}>
-                <Card.Content>
+                <Card.Content style={[AppStyles.row, styles.cardRow]}>
                     <View style={[AppStyles.row, styles.cardRow]}>
                         <View style={styles.info}>
-                            <Text variant="bodyMedium">  Dal</Text>
+                            <Text variant="bodyMedium">Dal</Text>
+                            <Text variant="bodyMedium">A simple Dal made with love</Text>
                         </View>
-                        <Image style={{ width: 80, height: 80, borderRadius: 10 }} resizeMethod='cover' source={{ uri: 'https://picsum.photos/700' }} />
+                        {/* <Image style={{ width: 80, height: 80, borderRadius: 10 }} resizeMethod='cover' source={{ uri: 'https://picsum.photos/700' }} /> */}
+
+                        <View style={styles.btnRow}>
+                            <TouchableOpacity onPress={() => dispatch(removeFromCart())} style={[styles.btn, styles.startBtn]}>
+                                <Text style={styles.btnText}>-</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btn} disabled>
+                                <Text style={styles.btnText}>2</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => dispatch(addToCart())} style={[styles.btn, styles.endBtn]}>
+                                <Text style={styles.btnText}>+</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Card.Content>
-                <View style={styles.btnRow}>
-                    <TouchableOpacity onPress={() => dispatch(removeFromCart())} style={[styles.btn, styles.startBtn]}>
-                        <Text style={styles.btnText}>-</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn} disabled>
-                        <Text style={styles.btnText}>10</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => dispatch(addToCart())} style={[styles.btn, styles.endBtn]}>
-                        <Text style={styles.btnText}>+</Text>
-                    </TouchableOpacity>
-                </View>
             </Card>
 
         </Layout>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        width: '100%',
+        // width: '100%',
         marginTop: 10,
         marginBottom: 5,
         paddingRight: 10
@@ -99,6 +101,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexGrow: 1,
         paddingRight: 10,
-        width: '74%',
+        // width: 100
+        width: '65%',
     }
 }) 
