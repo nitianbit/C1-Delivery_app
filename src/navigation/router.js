@@ -36,8 +36,9 @@ const AccountRouter = () => {
                 name={SCREEN.PROFILE}
                 component={Profile}
                 options={{
-                    headerShown: false,
-                    gestureEnabled: false
+                    // headerShown: false,
+                    gestureEnabled: false,
+                    title: "Edit Profile"
                 }}
             />
             <BottomStack.Screen
@@ -52,8 +53,9 @@ const AccountRouter = () => {
                 name={SCREEN.ORDERS}
                 component={Orders}
                 options={{
-                    headerShown: false,
-                    gestureEnabled: false
+                    // headerShown: false,
+                    gestureEnabled: false,
+                    title: 'My Orders'
                 }}
             />
 
