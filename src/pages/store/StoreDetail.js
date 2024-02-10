@@ -3,12 +3,16 @@ import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { Button, Card, Text } from 'react-native-paper';
 import { AppStyles } from '../../common/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../../store/slices/items';
 
 
 
 
 
 const StoreDetail = () => {
+    const items = useSelector((state) => state.cart.items)
+    const dispatch = useDispatch()
 
     const handleChange = (key, value) => {
         console.log({ key, value })
@@ -27,13 +31,13 @@ const StoreDetail = () => {
                     </View>
                 </Card.Content>
                 <View style={styles.btnRow}>
-                    <TouchableOpacity style={[styles.btn, styles.startBtn]}>
+                    <TouchableOpacity onPress={() => dispatch(removeFromCart())} style={[styles.btn, styles.startBtn]}>
                         <Text style={styles.btnText}>-</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btn} disabled>
                         <Text style={styles.btnText}>10</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.btn, styles.endBtn]}>
+                    <TouchableOpacity onPress={() => dispatch(addToCart())} style={[styles.btn, styles.endBtn]}>
                         <Text style={styles.btnText}>+</Text>
                     </TouchableOpacity>
                 </View>
