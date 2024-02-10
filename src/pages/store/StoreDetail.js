@@ -8,7 +8,7 @@ import { AppStyles } from '../../common/styles';
 
 
 
-const AddtoCart = () => {
+const StoreDetail = () => {
 
     const handleChange = (key, value) => {
         console.log({ key, value })
@@ -43,7 +43,7 @@ const AddtoCart = () => {
     )
 }
 
-export default AddtoCart
+export default StoreDetail
 
 const styles = StyleSheet.create({
     input: {
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         width: '74%',
     }
-})
+}) 
