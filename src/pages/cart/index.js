@@ -73,7 +73,7 @@ const Cart = ({ navigation }) => {
                 </Card.Content>
             </Card> : null}
 
-            <Button disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={handleContinue}>
+            <Button disabled={!cartItems.length || !address} style={styles.btn} mode="contained" onPress={handleContinue}>
                 Continue for Payment
             </Button>
             <Portal>

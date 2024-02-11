@@ -12,6 +12,7 @@ import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import CopyIcon from '../../assets/icons/CopyIcon';
 import ArrowRight from '../../assets/icons/ArrowRight';
+import { SCREEN } from '../../navigation/utils';
 
 
 
@@ -60,7 +61,12 @@ const Payment = ({ navigation, route }) => {
                 //move to Tabs page
 
                 dispatch(emptyCart())
-                navigation.navigate(SCREEN.TABS)
+                navigation.navigate(SCREEN.TABS, {
+                    screen: SCREEN.STORESTACKSCREEN,
+                    params: {
+                        screen: SCREEN.DASHBOARD
+                    }
+                })
             }
         } catch (error) {
 

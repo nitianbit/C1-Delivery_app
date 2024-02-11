@@ -26,3 +26,14 @@ export const doPOST = async function (url, data) {
         throw new Error(err.message);
     }
 };
+export const doPUT = async function (url, data) {
+    const reqParam = data;
+    const method = API_METHODS.PUT;
+    const endPoint = url;
+    try {
+        const response = await ApiHandler({ reqParam, method, endPoint });
+        return response;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};

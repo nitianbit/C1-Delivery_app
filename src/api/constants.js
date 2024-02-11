@@ -21,6 +21,7 @@ export const ENDPOINTS = {
     orderDetail: (id) => `${baseUrl}/order/get/${id}`,
     orderCreate: `${baseUrl}/order/create`,
     menu: `${baseUrl}/menuItems/get`,
+    userUpdate: `${baseUrl}/users/update`,
 
 
 };

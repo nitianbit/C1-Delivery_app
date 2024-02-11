@@ -1,9 +1,21 @@
-import { StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import { Alert, StyleSheet, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
-import { TextInput, Button, Text } from 'react-native-paper';
+import { TextInput, Button, Text, Dialog, Portal, } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { doPOST, doPUT } from '../../api/httpUtil';
+import { ENDPOINTS } from '../../api/constants';
+import { addDetails } from '../../store/slices/user';
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+    const user = useSelector(state => state.user.details);
+    const dispatch = useDispatch();
+
+    const [visible, setVisible] = React.useState(false);
+    const [error, setError] = useState('')
+    const showDialog = () => setVisible(true);
+    const hideDialog = () => setVisible(false);
+
 
     const [data, setData] = useState({
         phone: null,
@@ -12,7 +24,37 @@ const Profile = () => {
         name: ''
     });
 
+    useEffect(() => {
+        if (user) {
+            setData(user)
+        }
+    }, [user])
+
     const handleChange = (key, value) => setData(prev => ({ ...prev, [key]: value }))
+
+    const updateProfile = async () => {
+        try {
+            if (!data.email || !data.name) {
+                setError('Please fill all the details.')
+                return showDialog(true)
+            }
+            const response = await doPUT(ENDPOINTS.userUpdate, data);
+
+
+            if (response?.data?.status >= 400) {
+                setError(response.data?.message)
+                showDialog(true);
+                return
+            }
+            console.log("profile updated")
+
+            Alert.alert('Profile Updated')
+            dispatch(addDetails(response?.data?.data))
+            navigation.goBack()
+        } catch (error) {
+
+        }
+    }
 
     return (
         <Layout>
@@ -23,14 +65,14 @@ const Profile = () => {
                 style={styles.input}
                 mode="outlined"
             />
-            <TextInput
+            {/* <TextInput
                 label="Phone"
                 value={data?.phone}
                 onChangeText={(val) => handleChange('phone', val)}
                 style={styles.input}
                 keyboardType={"number-pad"}
                 mode="outlined"
-            />
+            /> */}
             <TextInput
                 label="Email"
                 value={data?.email}
@@ -39,16 +81,28 @@ const Profile = () => {
                 mode="outlined"
             />
             <TextInput
-                label="Password"
+                label="New Password (Optional)"
+                placeholder='Enter New Password'
                 value={data?.password}
                 onChangeText={(val) => handleChange('password', val)}
                 style={styles.input}
                 mode="outlined"
                 secureTextEntry={true}
             />
-            <Button mode="contained" onPress={() => console.log('Pressed')} style={styles.btn}>
+            <Button disabled={!!(!data.name || !data.email)} mode="contained" onPress={updateProfile} style={styles.btn}>
                 Save
             </Button>
+            <Portal>
+                <Dialog visible={visible} onDismiss={hideDialog}>
+                    <Dialog.Title>Error</Dialog.Title>
+                    <Dialog.Content>
+                        <Text variant="bodyMedium">{error}</Text>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={hideDialog}>ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </Layout>
     )
 }
