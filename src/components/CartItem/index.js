@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../store/slices/items';
 
 
-const CartItem = ({ name, description, _id }) => {
+const CartItem = ({ name, description, _id, price }) => {
     const cartItems = useSelector((state) => state.cart.items)
     const dispatch = useDispatch();
 
@@ -35,13 +35,13 @@ const CartItem = ({ name, description, _id }) => {
                     {/* <Image style={{ width: 80, height: 80, borderRadius: 10 }} resizeMethod='cover' source={{ uri: 'https://picsum.photos/700' }} /> */}
 
                     <View style={styles.btnRow}>
-                        <TouchableOpacity onPress={() => dispatch(removeFromCart({ name, description, _id }))} style={[styles.btn, styles.startBtn]}>
+                        <TouchableOpacity onPress={() => dispatch(removeFromCart({ name, description, _id, price }))} style={[styles.btn, styles.startBtn]}>
                             <Text style={styles.btnText}>-</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btn} disabled>
                             <Text style={styles.btnText}>{item?.quantity ?? 0}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id }))} style={[styles.btn, styles.endBtn]}>
+                        <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id, price }))} style={[styles.btn, styles.endBtn]}>
                             <Text style={styles.btnText}>+</Text>
                         </TouchableOpacity>
                     </View>

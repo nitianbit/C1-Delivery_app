@@ -13,6 +13,7 @@ import Delivery from '../assets/icons/Delivery';
 import CartIcon from "../assets/icons/Cart"
 import AccountIcon from "../assets/icons/Account"
 import Signup from '../pages/signup';
+import Payment from '../pages/payment';
 
 const Stack = createNativeStackNavigator();
 const BottomStack = createNativeStackNavigator();
@@ -162,6 +163,15 @@ const router = () => {
                 options={{
                     headerShown: false,
                     gestureEnabled: false
+                }}
+            />
+            <Stack.Screen
+                name={SCREEN.PAYMENT}
+                component={Payment}
+                options={{
+                    // headerShown: false,
+                    gestureEnabled: false,
+                    title: 'Payment'
                 }}
             />
 

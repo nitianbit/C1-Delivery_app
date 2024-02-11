@@ -33,12 +33,12 @@ export const counterSlice = createSlice({
                 }
             }
         },
-        incrementByAmount: (state, action) => {
-
+        emptyCart: (state) => {
+            state.items = []
         },
     },
 })
 
-export const { addToCart, removeFromCart, incrementByAmount } = counterSlice.actions
+export const { addToCart, removeFromCart, emptyCart } = counterSlice.actions
 
 export default counterSlice.reducer

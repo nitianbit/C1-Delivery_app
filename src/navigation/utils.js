@@ -17,4 +17,5 @@ export const SCREEN = {
     ACCOUNT: 'ACCOUNT',
     ORDERS: 'ORDERS',
     ADDRESS: 'ADDRESS',
+    PAYMENT: 'PAYMENT'
 }

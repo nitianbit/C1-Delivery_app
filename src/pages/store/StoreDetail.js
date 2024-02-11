@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Card, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
 import { doGET } from '../../api/httpUtil';
@@ -38,12 +38,21 @@ const StoreDetail = ({ navigation }) => {
         fetchMenu();
     }, [])
 
+    const totalPrice = () => cartItems?.reduce((total, curr) => total + curr.quantity * curr.price, 0)
+
+
     return (
         <Layout>
             <FlatList
                 data={data}
                 renderItem={({ item, index }) => <CartItem key={index} {...item} />}
             />
+            {cartItems?.length > 0 ? <Card style={styles.card}>
+                <Card.Content>
+                    <Text variant="bodyLarge">Total Price:     Rs {totalPrice()}</Text>
+                </Card.Content>
+            </Card> : null}
+
             <Button disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
                 Checkout
             </Button>
@@ -58,5 +67,9 @@ const styles = StyleSheet.create({
     btn: {
         marginBottom: 10,
         width: width - 40
+    },
+    card: {
+        width: '100%',
+        marginVertical: 10
     }
 }) 
