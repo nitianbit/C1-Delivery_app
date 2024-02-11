@@ -20,7 +20,7 @@ const Dashboard = ({ navigation }) => {
                     <Text variant="titleLarge">Restaurant Name</Text>
                     <Text variant="bodyMedium" style={styles.desc}>Restaurant Description</Text>
                 </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                <Card.Cover source={{ uri: 'https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg' }} />
             </Card>
         </Layout>
     )

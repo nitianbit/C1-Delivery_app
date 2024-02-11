@@ -12,6 +12,7 @@ import Cart from '../pages/cart';
 import Delivery from '../assets/icons/Delivery';
 import CartIcon from "../assets/icons/Cart"
 import AccountIcon from "../assets/icons/Account"
+import Signup from '../pages/signup';
 
 const Stack = createNativeStackNavigator();
 const BottomStack = createNativeStackNavigator();
@@ -129,7 +130,7 @@ function Tabs() {
 
 const router = () => {
     return (
-        <Stack.Navigator initialRouteName={SCREEN.TABS}>
+        <Stack.Navigator initialRouteName={SCREEN.SPLASH}>
             <Stack.Screen
                 name={SCREEN.SPLASH}
                 component={Splash}
@@ -139,6 +140,14 @@ const router = () => {
                 }}
             />
 
+            <Stack.Screen
+                name={SCREEN.SIGNUP}
+                component={Signup}
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false
+                }}
+            />
             <Stack.Screen
                 name={SCREEN.LOGIN}
                 component={Login}

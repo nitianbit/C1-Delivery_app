@@ -92,13 +92,13 @@ export async function apiHeaders(reqParam, contentType, acceptType, refreshToken
         reqParam instanceof FormData
             ? {
                 // "Content-Type": "multipart/form-data",
-                Authorization: token !== null ? `Bearer ${token}` : "",
+                token: token !== null ? `${token}` : "",
             }
             : {
                 Accept: acceptType,
                 "x-api-key": "web",
                 "Content-Type": contentType,
-                Authorization: token !== null ? `Bearer ${token}` : "",
+                token: token !== null ? `${token}` : "",
             };
     const headers = requestHeader;
     return headers;

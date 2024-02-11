@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Router from './src/navigation/router';
 import { store } from './src/store/store';
 import { Provider } from 'react-redux';
+import { PaperProvider } from 'react-native-paper';
 
 
 
@@ -13,7 +14,9 @@ const App = () => {
     <>
       <Provider store={store}>
         <NavigationContainer>
-          <Router />
+          <PaperProvider>
+            <Router />
+          </PaperProvider>
         </NavigationContainer>
       </Provider>
     </>

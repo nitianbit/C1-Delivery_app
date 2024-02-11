@@ -15,7 +15,8 @@ export const baseUrl = `http://192.168.1.8:5400/api`
 export const ENDPOINTS = {
     //auth
     login: `${baseUrl}/auth/login`,
-    signup: `${baseUrl}/auth/signup`,
+    signup: `${baseUrl}/auth/register`,
+    currentUser: `${baseUrl}/users/get`,
 
 
 };

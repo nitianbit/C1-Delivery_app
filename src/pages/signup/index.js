@@ -3,22 +3,22 @@ import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput } from 'react-native-paper';
 import { width } from '../../utils/constants';
-import { Button, Dialog, Portal, } from 'react-native-paper';
-import { Text } from 'react-native-paper';
+import { Button } from 'react-native-paper';
+import { Text, Dialog, Portal, PaperProvider, } from 'react-native-paper';
+import { doPOST } from '../../api/httpUtil';
+import { ENDPOINTS } from '../../api/constants';
 import { SCREEN } from '../../navigation/utils';
 import { useDispatch } from 'react-redux';
-import { ENDPOINTS } from '../../api/constants';
-import { doPOST } from '../../api/httpUtil';
-import { setLocalStorageItem } from '../../storage';
-import { STORAGE_KEYS } from '../../storage/constants';
 import { addDetails } from '../../store/slices/user';
 
 
 
 
-const Login = ({ navigation }) => {
+const Signup = ({ navigation }) => {
     const dispatch = useDispatch();
+
     const [data, setData] = useState({
+        name: null,
         password: null,
         email: null
     });
@@ -27,38 +27,45 @@ const Login = ({ navigation }) => {
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
 
-    const handleChange = (key, value) => setData(prev => ({ ...prev, [key]: value }));
+
+    const handleChange = (key, value) => setData(prev => ({ ...prev, [key]: value }))
+
 
     const handleContinue = async () => {
         try {
-            if (!data.email || !data.password) {
+            if (!data.name || !data.email || !data.password) {
                 setError('Please fill all the details.')
                 return showDialog(true)
             }
-            const response = await doPOST(ENDPOINTS.login, data);
+            const response = await doPOST(ENDPOINTS.signup, data);
             console.log(response);
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)
                 showDialog(true)
             }
-            setLocalStorageItem(STORAGE_KEYS.ACCESS_TOKEN, response?.data?.data?.token)
-            dispatch(addDetails(response?.data?.data?.user))
-            navigation.navigate(SCREEN.TABS)
+            navigation.navigate(SCREEN.LOGIN)
+            // dispatch(addDetails(response.data.data))
+
         } catch (error) {
 
         }
     }
 
-
     return (
         <Layout>
-            <Text variant="displaySmall">Welcome Back!</Text>
+            <Text variant="displaySmall">Sign Up!</Text>
+            <TextInput
+                label="Name"
+                value={data?.name}
+                onChangeText={(val) => handleChange('name', val)}
+                style={styles.input}
+                mode="outlined"
+            />
             <TextInput
                 label="Email"
                 value={data?.email}
                 onChangeText={(val) => handleChange('email', val)}
-                // keyboardType="numeric"
                 style={styles.input}
                 mode="outlined"
             />
@@ -69,13 +76,13 @@ const Login = ({ navigation }) => {
                 style={styles.input}
                 mode="outlined"
             />
-            <Button mode="contained" onPress={handleContinue} style={styles.btn}>
+            <Button disabled={!!(!data.name || !data.email || !data.password)} mode="contained" style={styles.btn} onPress={handleContinue}>
                 Continue
             </Button>
-
-            <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
-                <Text variant="labelLarge" >New User? signup</Text>
+            <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.LOGIN)}>
+                <Text variant="labelLarge" >Already have an account? Login</Text>
             </TouchableOpacity>
+
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
                     <Dialog.Title>Error</Dialog.Title>
@@ -83,7 +90,7 @@ const Login = ({ navigation }) => {
                         <Text variant="bodyMedium">{error}</Text>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={hideDialog}>ok</Button>
+                        <Button onPress={hideDialog}>Done</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -92,7 +99,7 @@ const Login = ({ navigation }) => {
     )
 }
 
-export default Login
+export default Signup
 
 const styles = StyleSheet.create({
     input: {

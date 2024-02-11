@@ -5,17 +5,24 @@ import { SCREEN } from '../../navigation/utils'
 import { Card, Text, Icon, MD3Colors } from 'react-native-paper'
 import { width } from '../../utils/constants'
 import ArrowRight from '../../assets/icons/ArrowRight'
+import { useSelector } from 'react-redux'
 
 
 
 const data = [
     { screen: 'Profile', key: SCREEN.PROFILE },
-    { screen: 'Orders', key: SCREEN.ORDERS },
+    { screen: 'My Orders', key: SCREEN.ORDERS },
 ]
 
 const Account = ({ navigation }) => {
+    const user = useSelector(state => state.user.details);
+
     return (
         <Layout>
+            <View style={styles.user}>
+                <Text variant="headlineMedium">Hello {user?.name}!</Text>
+                <Text variant="bodyMedium"> {user?.email}</Text>
+            </View>
             <FlatList
                 data={data}
                 style={styles.flatlist}
@@ -45,10 +52,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     flatlist: {
-        marginTop: 100
+        marginTop: 50
     },
     item: {
         fontSize: 18,
         fontWeight: '500'
+    },
+    user: {
+        width: '100%',
+        marginTop: 50
     }
 })

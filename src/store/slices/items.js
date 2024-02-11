@@ -8,10 +8,10 @@ export const counterSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart: (state, payload) => {
+        addToCart: (state,) => {
             state.value += 1
         },
-        removeFromCart: (state, payload) => {
+        removeFromCart: (state,) => {
             state.value -= 1
         },
         incrementByAmount: (state, action) => {
