@@ -45,10 +45,9 @@ const Payment = ({ navigation, route }) => {
 
     const handleContinue = async () => {
         try {
-            const items = cartItems?.map(item => ({ menuItemId: item._id, quantity: item.quantity }));
+            const items = cartItems?.map(item => ({ menuItemId: item._id, quantity: item.quantity, name: item.name }));
             console.log(items)
             const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address });
-            console.log(response);
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)
