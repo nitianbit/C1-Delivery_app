@@ -1,7 +1,9 @@
 import { FlatList, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput, Button, Text, Card } from 'react-native-paper';
+import { doGET } from '../../api/httpUtil';
+import { ENDPOINTS } from '../../api/constants';
 
 
 const data = [
@@ -10,12 +12,21 @@ const data = [
 
 const Orders = () => {
 
-    const [data, setData] = useState({
-        phone: null,
-        password: null,
-        email: null,
-        name: ''
-    });
+    const [data, setData] = useState([]);
+
+    const fetchOrders = async () => {
+        try {
+            const orders = await doGET(ENDPOINTS.orders);
+            console.log(orders)
+            setData(orders.data?.data)
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        fetchOrders();
+    }, [])
 
 
     return (

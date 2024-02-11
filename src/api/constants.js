@@ -17,6 +17,10 @@ export const ENDPOINTS = {
     login: `${baseUrl}/auth/login`,
     signup: `${baseUrl}/auth/register`,
     currentUser: `${baseUrl}/users/get`,
+    orders: `${baseUrl}/order/get`,
+    orderDetail: (id) => `${baseUrl}/order/get/${id}`,
+    orderCreate: `${baseUrl}/order/create`,
+    menu: `${baseUrl}/menuItems/get`,
 
 
 };

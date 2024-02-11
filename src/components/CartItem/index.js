@@ -1,14 +1,27 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../common/styles'
 import { Button, Card, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../store/slices/items';
 
 
-const CartItem = ({ title, description }) => {
+const CartItem = ({ name, description, _id }) => {
     const cartItems = useSelector((state) => state.cart.items)
     const dispatch = useDispatch();
+
+    const [item, setItem] = useState(null);
+
+    useEffect(() => {
+        if (_id) {
+            const cartItem = cartItems.find(item => item._id === _id);
+            if (cartItem) {
+                setItem(cartItem)
+            } else {
+                setItem(null)
+            }
+        }
+    }, [cartItems, _id])
 
 
     return (
@@ -16,19 +29,19 @@ const CartItem = ({ title, description }) => {
             <Card.Content style={[AppStyles.row, styles.cardRow]}>
                 <View style={[AppStyles.row, styles.cardRow]}>
                     <View style={styles.info}>
-                        <Text variant="bodyMedium">{title}</Text>
-                        <Text variant="bodyMedium">{description}</Text>
+                        <Text variant="bodyMedium">{name}</Text>
+                        <Text variant="bodySmall">{description}</Text>
                     </View>
                     {/* <Image style={{ width: 80, height: 80, borderRadius: 10 }} resizeMethod='cover' source={{ uri: 'https://picsum.photos/700' }} /> */}
 
                     <View style={styles.btnRow}>
-                        <TouchableOpacity onPress={() => dispatch(removeFromCart())} style={[styles.btn, styles.startBtn]}>
+                        <TouchableOpacity onPress={() => dispatch(removeFromCart({ name, description, _id }))} style={[styles.btn, styles.startBtn]}>
                             <Text style={styles.btnText}>-</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btn} disabled>
-                            <Text style={styles.btnText}>2</Text>
+                            <Text style={styles.btnText}>{item?.quantity ?? 0}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => dispatch(addToCart())} style={[styles.btn, styles.endBtn]}>
+                        <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id }))} style={[styles.btn, styles.endBtn]}>
                             <Text style={styles.btnText}>+</Text>
                         </TouchableOpacity>
                     </View>
