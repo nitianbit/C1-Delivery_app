@@ -27,7 +27,6 @@ const StoreDetail = ({ navigation }) => {
     const fetchMenu = async () => {
         try {
             const menu = await doGET(ENDPOINTS.menu);
-            console.log(menu.data.data)
             setData(menu.data?.data)
         } catch (error) {
 

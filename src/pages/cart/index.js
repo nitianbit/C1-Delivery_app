@@ -16,7 +16,6 @@ import { width } from '../../utils/constants';
 const Cart = ({ navigation }) => {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
-    console.log(cartItems);
 
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState('')
@@ -30,7 +29,6 @@ const Cart = ({ navigation }) => {
             navigation.navigate(SCREEN.PAYMENT, { address });
             return;
             const response = await doPOST(ENDPOINTS.orderCreate, cartItems);
-            console.log(response);
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)
@@ -60,12 +58,12 @@ const Cart = ({ navigation }) => {
                 renderItem={({ item, index }) => <CartItem key={index} {...item} />}
             />
 
-            <TextInput
+            {cartItems?.length > 0 ? <TextInput
                 label="Enter Delivery Address"
                 value={address}
                 onChangeText={text => setAddress(text)}
                 style={styles.card}
-            />
+            /> : null}
 
             {cartItems?.length > 0 ? <Card style={styles.card}>
                 <Card.Content>

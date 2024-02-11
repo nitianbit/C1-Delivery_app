@@ -17,7 +17,6 @@ const Orders = () => {
     const fetchOrders = async () => {
         try {
             const orders = await doGET(ENDPOINTS.orders);
-            console.log(JSON.stringify(orders.data))
             setData(orders.data?.data)
         } catch (error) {
 

@@ -14,12 +14,10 @@ const Splash = ({ navigation }) => {
     const fetchUserDetails = async () => {
         try {
             const token = await getLocalStorageItem(STORAGE_KEYS.ACCESS_TOKEN);
-            console.log(token)
             if (!token) {
                 return navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] });
             }
             const response = await doGET(ENDPOINTS.currentUser);
-            console.log(response);
             if (response.data.status === 401) {
                 return navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] });
             }

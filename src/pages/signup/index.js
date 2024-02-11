@@ -38,7 +38,6 @@ const Signup = ({ navigation }) => {
                 return showDialog(true)
             }
             const response = await doPOST(ENDPOINTS.signup, data);
-            console.log(response);
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)

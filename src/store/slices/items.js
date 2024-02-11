@@ -21,7 +21,6 @@ export const counterSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             const { _id } = action.payload;
-            console.log(state.items, _id)
             const existingItemIndex = state.items.findIndex(item => item._id === _id);
 
             if (existingItemIndex !== -1) {
