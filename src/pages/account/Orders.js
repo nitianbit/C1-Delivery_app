@@ -36,12 +36,12 @@ const Orders = () => {
                     <Card.Content>
                         <View style={styles.statusRow}>
                             <Text variant="bodyLarge" > Order Status: </Text>
-                            <Text variant="bodyLarge" style={{}}>  {order?.status}</Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold' }}>  {order?.status}</Text>
 
                         </View>
                         <View style={[styles.statusRow, { marginBottom: 10 }]}>
                             <Text variant="bodyLarge" > Total Amount: </Text>
-                            <Text variant="bodyLarge" style={{}}>  Rs.{order?.totalAmount}</Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold' }}>  Rs.{order?.totalAmount}</Text>
 
                         </View>
 

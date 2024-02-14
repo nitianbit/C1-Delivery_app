@@ -20,8 +20,8 @@ const Account = ({ navigation }) => {
     return (
         <Layout>
             <View style={styles.user}>
-                <Text variant="headlineMedium">Hello {user?.name}!</Text>
-                <Text variant="bodyMedium"> {user?.email}</Text>
+                <Text variant="headlineMedium" style={{ color: '#543488', fontWeight: 'bold' }}>Hello {user?.name}!</Text>
+                <Text variant="bodyMedium" style={{ color: '#543488', }}> {user?.email}</Text>
             </View>
             <FlatList
                 data={data}
@@ -34,7 +34,7 @@ const Account = ({ navigation }) => {
                 }
             />
             <TouchableOpacity style={styles.card} onPress={() => navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] })}>
-                <Text style={styles.item}>Log Out</Text>
+                <Text style={[styles.item, { fontWeight: 'bold' }]}>Log Out</Text>
             </TouchableOpacity>
         </Layout>
     )
