@@ -8,7 +8,7 @@ export const API_METHODS = {
 
 
 
-export const baseUrl = `http://192.168.1.8:5400/api`
+export const baseUrl = `https://delivery-bac.onrender.com/api`
 
 
 

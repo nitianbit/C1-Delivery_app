@@ -36,10 +36,11 @@ const Login = ({ navigation }) => {
                 return showDialog(true)
             }
             const response = await doPOST(ENDPOINTS.login, data);
-
-            if (response?.data?.status >= 400) {
+            console.log(response)
+            if (response?.data?.status >= 400 || response?.status >= 400) {
                 setError(response.data?.message)
-                showDialog(true)
+                showDialog(true);
+                return;
             }
             setLocalStorageItem(STORAGE_KEYS.ACCESS_TOKEN, response?.data?.data?.token)
             dispatch(addDetails(response?.data?.data?.user))
@@ -73,11 +74,14 @@ const Login = ({ navigation }) => {
             </Button>
 
             <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
-                <Text variant="labelLarge" >New User? signup</Text>
+                <Text variant="titleMedium" style={{
+                    textDecorationLine: 'underline',
+                    textDecorationColor: 'blue'
+                }} >New User? signup</Text>
             </TouchableOpacity>
-            <Portal>
+            <Portal >
                 <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>Error</Dialog.Title>
+                    {/* <Dialog.Title>Error</Dialog.Title> */}
                     <Dialog.Content>
                         <Text variant="bodyMedium">{error}</Text>
                     </Dialog.Content>

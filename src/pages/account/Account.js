@@ -33,6 +33,9 @@ const Account = ({ navigation }) => {
                 </TouchableOpacity>
                 }
             />
+            <TouchableOpacity style={styles.card} onPress={() => navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] })}>
+                <Text style={styles.item}>Log Out</Text>
+            </TouchableOpacity>
         </Layout>
     )
 }
