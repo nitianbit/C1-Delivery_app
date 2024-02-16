@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doPOST, doPUT } from '../../api/httpUtil';
 import { ENDPOINTS } from '../../api/constants';
 import { addDetails } from '../../store/slices/user';
+import { COLOR } from '../../utils/constants';
 
 const Profile = ({ navigation }) => {
     const user = useSelector(state => state.user.details);
@@ -59,11 +60,13 @@ const Profile = ({ navigation }) => {
     return (
         <Layout>
             <TextInput
-                label="Name"
+                label={<Text>Name</Text>}
                 value={data?.name}
                 onChangeText={(val) => handleChange('name', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
             {/* <TextInput
                 label="Phone"
@@ -74,22 +77,26 @@ const Profile = ({ navigation }) => {
                 mode="outlined"
             /> */}
             <TextInput
-                label="Email"
+                label={<Text>Email</Text>}
                 value={data?.email}
                 onChangeText={(val) => handleChange('email', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
             <TextInput
-                label="New Password (Optional)"
+                label={<Text>New Password (Optional)</Text>}
                 placeholder='Enter New Password'
                 value={data?.password}
                 onChangeText={(val) => handleChange('password', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
                 secureTextEntry={true}
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
-            <Button disabled={!!(!data.name || !data.email)} mode="contained" onPress={updateProfile} style={styles.btn}>
+            <Button buttonColor={COLOR.THEME_COLOR} disabled={!!(!data.name || !data.email)} mode="contained" onPress={updateProfile} style={styles.btn}>
                 Save
             </Button>
             <Portal>
@@ -113,6 +120,9 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         marginVertical: 10,
+        backgroundColor: COLOR.BG_COLOR,
+        borderWidth: 1,
+        borderColor: COLOR.SECONDARY_COLOR,
     },
     btn: {
         width: '100%',

@@ -7,7 +7,7 @@ import { doGET } from '../../api/httpUtil';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 import { SCREEN } from '../../navigation/utils';
-import { width } from '../../utils/constants';
+import { COLOR, width } from '../../utils/constants';
 
 
 const data = [
@@ -52,7 +52,7 @@ const StoreDetail = ({ navigation }) => {
                 </Card.Content>
             </Card> : null}
 
-            <Button disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
+            <Button buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
                 Checkout
             </Button>
 
@@ -65,7 +65,7 @@ export default StoreDetail
 const styles = StyleSheet.create({
     btn: {
         marginBottom: 10,
-        width: width - 40
+        width: width - 20
     },
     card: {
         width: '100%',

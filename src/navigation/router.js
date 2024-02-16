@@ -14,6 +14,7 @@ import CartIcon from "../assets/icons/Cart"
 import AccountIcon from "../assets/icons/Account"
 import Signup from '../pages/signup';
 import Payment from '../pages/payment';
+import { COLOR } from '../utils/constants';
 
 const Stack = createNativeStackNavigator();
 const BottomStack = createNativeStackNavigator();
@@ -101,8 +102,8 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Delivery',
-                    tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? color : '#999'} />)
+                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Delivery</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? COLOR.THEME_COLOR : '#999'} />)
                 }}
             />
             <Tab.Screen
@@ -111,8 +112,10 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Cart',
-                    tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? color : '#999'} />)
+                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Cart</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? COLOR.THEME_COLOR : '#999'} />),
+
+
                 }}
             />
             <Tab.Screen
@@ -121,8 +124,9 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: 'Account',
-                    tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? color : '#999'} />)
+                    // tabBarLabel: 'Account',
+                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Account</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? COLOR.THEME_COLOR : '#999'} />)
                 }}
             />
 

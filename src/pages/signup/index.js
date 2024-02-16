@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput } from 'react-native-paper';
-import { width } from '../../utils/constants';
+import { COLOR, width } from '../../utils/constants';
 import { Button } from 'react-native-paper';
 import { Text, Dialog, Portal, PaperProvider, } from 'react-native-paper';
 import { doPOST } from '../../api/httpUtil';
@@ -53,30 +53,36 @@ const Signup = ({ navigation }) => {
     }
 
     return (
-        <Layout>
+        <Layout style={styles.layout}>
             <Text variant="displaySmall">Sign Up!</Text>
             <TextInput
-                label="Name"
+                label={<Text>Name</Text>}
                 value={data?.name}
                 onChangeText={(val) => handleChange('name', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
             <TextInput
-                label="Email"
+                label={<Text>Email</Text>}
                 value={data?.email}
                 onChangeText={(val) => handleChange('email', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
             <TextInput
-                label="Password"
+                label={<Text>Password</Text>}
                 value={data?.password}
                 onChangeText={(val) => handleChange('password', val)}
                 style={styles.input}
-                mode="outlined"
+                mode="flat"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             />
-            <Button disabled={!!(!data.name || !data.email || !data.password)} mode="contained" style={styles.btn} onPress={handleContinue}>
+            <Button textColor='#fff' dark={true} disabled={!!(!data.name || !data.email || !data.password)} mode="elevated" style={styles.btn} onPress={handleContinue}>
                 Continue
             </Button>
             <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.LOGIN)}>
@@ -104,12 +110,17 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         marginVertical: 10,
+        backgroundColor: COLOR.BG_COLOR,
+        borderWidth: 1,
+        borderColor: COLOR.SECONDARY_COLOR,
     },
     btn: {
         width: '100%',
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 20,
+        backgroundColor: COLOR.THEME_COLOR,
+
         // position: 'absolute',
         // bottom: 20
     },
@@ -122,5 +133,8 @@ const styles = StyleSheet.create({
     signupText: {
         fontWeight: '500',
 
+    },
+    layout: {
+        backgroundColor: COLOR.SECONDARY_COLOR
     }
 })

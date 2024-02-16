@@ -3,7 +3,7 @@ import React from 'react'
 import Layout from '../../components/layout'
 import { SCREEN } from '../../navigation/utils'
 import { Card, Text, Icon, MD3Colors } from 'react-native-paper'
-import { width } from '../../utils/constants'
+import { COLOR, width } from '../../utils/constants'
 import ArrowRight from '../../assets/icons/ArrowRight'
 import { useSelector } from 'react-redux'
 import { removeLocalStorageItem } from '../../storage'
@@ -22,8 +22,8 @@ const Account = ({ navigation }) => {
     return (
         <Layout>
             <View style={styles.user}>
-                <Text variant="headlineMedium" style={{ color: '#543488', fontWeight: 'bold' }}>Hello {user?.name}!</Text>
-                <Text variant="bodyMedium" style={{ color: '#543488', }}> {user?.email}</Text>
+                <Text variant="headlineMedium" style={{ color: COLOR.THEME_COLOR, fontWeight: 'bold' }}>Hello {user?.name}!</Text>
+                <Text variant="bodyMedium" style={{ color: COLOR.THEME_COLOR }}> {user?.email}</Text>
             </View>
             <FlatList
                 data={data}

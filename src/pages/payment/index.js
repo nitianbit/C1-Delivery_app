@@ -7,7 +7,7 @@ import { doPOST } from '../../api/httpUtil';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 import { emptyCart } from '../../store/slices/items';
-import { width } from '../../utils/constants';
+import { COLOR, width } from '../../utils/constants';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import CopyIcon from '../../assets/icons/CopyIcon';
@@ -28,7 +28,7 @@ const Payment = ({ navigation, route }) => {
     const [upi, setUpi] = useState('9971164333@paytm');
     const [paymentDone, setpaymentDone] = React.useState(false);
 
-    let phoneNumber = '999999999'
+    let phoneNumber = '9971164333'
     const whatsAppUrl = `https://wa.me/${phoneNumber}`;
 
 
@@ -100,6 +100,7 @@ const Payment = ({ navigation, route }) => {
                     <Card.Content style={styles.content}>
                         <Text variant="bodyLarge">Payment Done </Text>
                         <Switch
+                            color={COLOR.THEME_COLOR}
                             value={paymentDone}
                             onValueChange={() => {
                                 setpaymentDone(prev => !prev);
@@ -109,7 +110,7 @@ const Payment = ({ navigation, route }) => {
                 </Card>
 
 
-                <Button disabled={!paymentDone} style={styles.btn} mode="contained" onPress={handleContinue}>
+                <Button buttonColor={COLOR.THEME_COLOR} disabled={!paymentDone} style={styles.btn} mode="contained" onPress={handleContinue}>
                     Order
                 </Button>
             </ScrollView>

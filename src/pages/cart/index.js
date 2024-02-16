@@ -9,7 +9,7 @@ import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 import { SCREEN } from '../../navigation/utils';
 import { emptyCart } from '../../store/slices/items';
-import { width } from '../../utils/constants';
+import { COLOR, width } from '../../utils/constants';
 
 
 
@@ -65,17 +65,21 @@ const Cart = ({ navigation }) => {
             />
 
             {cartItems?.length > 0 ? <TextInput
-                label="Enter Delivery Address"
+                label={<Text>Enter Delivery Address</Text>}
                 value={address}
                 onChangeText={text => setAddress(text)}
                 style={styles.card}
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             /> : null}
             {cartItems?.length > 0 ? <TextInput
-                label="Enter Phone Number"
+                label={<Text>Enter Phone Number</Text>}
                 value={phone}
                 onChangeText={text => setPhone(text)}
                 style={styles.card}
                 keyboardType="number-pad"
+                activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                underlineColor={COLOR.SECONDARY_COLOR}
             /> : null}
 
             {cartItems?.length > 0 ? <Card style={styles.card}>
@@ -84,7 +88,7 @@ const Cart = ({ navigation }) => {
                 </Card.Content>
             </Card> : null}
 
-            <Button disabled={!cartItems.length || !address || !phone} style={styles.btn} mode="contained" onPress={handleContinue}>
+            <Button buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length || !address || !phone} style={styles.btn} mode="contained" onPress={handleContinue}>
                 Continue for Payment
             </Button>
             <Portal>
@@ -108,11 +112,14 @@ export default Cart
 const styles = StyleSheet.create({
     btn: {
         marginBottom: 10,
-        width: width - 40
+        width: width - 20
     },
     card: {
         width: '100%',
-        marginVertical: 10
+        marginVertical: 10,
+        backgroundColor: COLOR.BG_COLOR,
+        borderWidth: 1,
+        borderColor: COLOR.SECONDARY_COLOR,
     },
     noItemView: {
         fontSize: 22,

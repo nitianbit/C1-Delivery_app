@@ -4,6 +4,7 @@ import { AppStyles } from '../../common/styles'
 import { Button, Card, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../store/slices/items';
+import { COLOR } from '../../utils/constants';
 
 
 const CartItem = ({ name, description, _id, price }) => {
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
     btn: {
         margin: 0,
         paddingVertical: 5,
-        backgroundColor: '#543488',
+        // backgroundColor: '#543488',
+        backgroundColor: COLOR.THEME_COLOR,
         borderRadius: 0,
         color: '#fff',
         paddingHorizontal: 12,

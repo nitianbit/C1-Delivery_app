@@ -17,7 +17,7 @@ export const AppStyles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: COLOR.BG_COLOR,
+        backgroundColor: COLOR.SECONDARY_COLOR,
         paddingHorizontal: 10
     },
 })

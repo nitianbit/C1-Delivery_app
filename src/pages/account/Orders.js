@@ -4,6 +4,7 @@ import Layout from '../../components/layout'
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { doGET } from '../../api/httpUtil';
 import { ENDPOINTS } from '../../api/constants';
+import { width } from '../../utils/constants';
 
 
 const data = [
@@ -57,7 +58,9 @@ const Orders = () => {
                 </Card>}
             />
 
-
+            <Card style={[styles.card, { paddingVertical: 5, width: width - 20 }]}>
+                <Text style={{ textAlign: 'center' }}>For any query, Please contact us at 9971164333</Text>
+            </Card>
         </Layout>
     )
 }
