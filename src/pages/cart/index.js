@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Button, Dialog, Portal, Text, Card, TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
 import { doPOST } from '../../api/httpUtil';
+import EmptyCart from '../../assets/icons/EmptyCart';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 import { SCREEN } from '../../navigation/utils';
@@ -22,11 +23,12 @@ const Cart = ({ navigation }) => {
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
     const [address, setAddress] = useState('')
+    const [phone, setPhone] = useState('')
 
 
     const handleContinue = async () => {
         try {
-            navigation.navigate(SCREEN.PAYMENT, { address });
+            navigation.navigate(SCREEN.PAYMENT, { address, phone });
             return;
             const response = await doPOST(ENDPOINTS.orderCreate, cartItems);
 
@@ -56,6 +58,10 @@ const Cart = ({ navigation }) => {
             <FlatList
                 data={cartItems}
                 renderItem={({ item, index }) => <CartItem key={index} {...item} />}
+                ListEmptyComponent={() => <View style={styles.noItem}>
+                    <EmptyCart />
+                    <Text style={styles.noItemView}>No Items in cart.</Text>
+                </View>}
             />
 
             {cartItems?.length > 0 ? <TextInput
@@ -64,6 +70,13 @@ const Cart = ({ navigation }) => {
                 onChangeText={text => setAddress(text)}
                 style={styles.card}
             /> : null}
+            {cartItems?.length > 0 ? <TextInput
+                label="Enter Phone Number"
+                value={phone}
+                onChangeText={text => setPhone(text)}
+                style={styles.card}
+                keyboardType="number-pad"
+            /> : null}
 
             {cartItems?.length > 0 ? <Card style={styles.card}>
                 <Card.Content>
@@ -71,7 +84,7 @@ const Cart = ({ navigation }) => {
                 </Card.Content>
             </Card> : null}
 
-            <Button disabled={!cartItems.length || !address} style={styles.btn} mode="contained" onPress={handleContinue}>
+            <Button disabled={!cartItems.length || !address || !phone} style={styles.btn} mode="contained" onPress={handleContinue}>
                 Continue for Payment
             </Button>
             <Portal>
@@ -100,5 +113,16 @@ const styles = StyleSheet.create({
     card: {
         width: '100%',
         marginVertical: 10
+    },
+    noItemView: {
+        fontSize: 22,
+        textAlign: 'center'
+
+    },
+    noItem: {
+        alignSelf: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 200
     }
 }) 

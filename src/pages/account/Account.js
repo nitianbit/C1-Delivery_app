@@ -6,6 +6,8 @@ import { Card, Text, Icon, MD3Colors } from 'react-native-paper'
 import { width } from '../../utils/constants'
 import ArrowRight from '../../assets/icons/ArrowRight'
 import { useSelector } from 'react-redux'
+import { removeLocalStorageItem } from '../../storage'
+import { STORAGE_KEYS } from '../../storage/constants'
 
 
 
@@ -33,7 +35,10 @@ const Account = ({ navigation }) => {
                 </TouchableOpacity>
                 }
             />
-            <TouchableOpacity style={styles.card} onPress={() => navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] })}>
+            <TouchableOpacity style={styles.card} onPress={async () => {
+                await removeLocalStorageItem(STORAGE_KEYS.ACCESS_TOKEN)
+                navigation.reset({ index: 0, routes: [{ name: SCREEN.LOGIN }] })
+            }}>
                 <Text style={[styles.item, { fontWeight: 'bold' }]}>Log Out</Text>
             </TouchableOpacity>
         </Layout>

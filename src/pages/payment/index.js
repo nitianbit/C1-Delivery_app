@@ -25,7 +25,7 @@ const Payment = ({ navigation, route }) => {
     const [error, setError] = useState('')
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
-    const [upi, setUpi] = useState('test@paytm.com');
+    const [upi, setUpi] = useState('9971164333@paytm');
     const [paymentDone, setpaymentDone] = React.useState(false);
 
     let phoneNumber = '999999999'
@@ -47,7 +47,7 @@ const Payment = ({ navigation, route }) => {
     const handleContinue = async () => {
         try {
             const items = cartItems?.map(item => ({ menuItemId: item._id, quantity: item.quantity, name: item.name }));
-            const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address });
+            const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address, phoneNo: route?.params?.phone });
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)
@@ -115,7 +115,6 @@ const Payment = ({ navigation, route }) => {
             </ScrollView>
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
                         <Text variant="bodyMedium">{error}</Text>
                     </Dialog.Content>

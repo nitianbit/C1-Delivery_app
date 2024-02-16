@@ -17,6 +17,7 @@ const Orders = () => {
     const fetchOrders = async () => {
         try {
             const orders = await doGET(ENDPOINTS.orders);
+            console.log(orders.data.data[0].items)
             setData(orders.data?.data)
         } catch (error) {
 
@@ -46,7 +47,10 @@ const Orders = () => {
                         </View>
 
                         {
-                            order?.items?.map((item, itemIndex) => <Text key={itemIndex} variant="bodySmall">{item.name} x {item.quantity}</Text>)
+                            order?.items?.map((item, itemIndex) => <View key={itemIndex} style={styles.statusRow}>
+                                <Text variant="bodySmall">{item.name} x {item.quantity}</Text>
+                                <Text variant="bodySmall">Rs. {item.price * item.quantity}</Text>
+                            </View>)
                         }
 
                     </Card.Content>

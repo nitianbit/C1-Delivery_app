@@ -18,7 +18,6 @@ export const AppStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLOR.BG_COLOR,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20
+        paddingHorizontal: 10
     },
 })

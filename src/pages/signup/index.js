@@ -38,10 +38,11 @@ const Signup = ({ navigation }) => {
                 return showDialog(true)
             }
             const response = await doPOST(ENDPOINTS.signup, data);
-
+            console.log(response)
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)
-                showDialog(true)
+                showDialog(true);
+                return;
             }
             navigation.navigate(SCREEN.LOGIN)
             // dispatch(addDetails(response.data.data))
@@ -84,12 +85,11 @@ const Signup = ({ navigation }) => {
 
             <Portal>
                 <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
                         <Text variant="bodyMedium">{error}</Text>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={hideDialog}>Done</Button>
+                        <Button onPress={hideDialog}>OK</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

@@ -71,8 +71,10 @@ const StoreStackRouter = () => {
                 name={SCREEN.DASHBOARD}
                 component={Dashboard}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     gestureEnabled: false,
+                    headerTitleAlign: 'center',
+                    headerTitle: 'Delivery'
                 }}
             />
 
