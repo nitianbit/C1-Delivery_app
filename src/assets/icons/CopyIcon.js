@@ -2,7 +2,7 @@ import * as React from "react";
 import Svg, { Path } from "react-native-svg";
 const CopyIcon = (props) => (
     <Svg
-        fill="#000000"
+        fill="#aa367c"
         width="20px"
         height="20px"
         viewBox="0 0 24 24"

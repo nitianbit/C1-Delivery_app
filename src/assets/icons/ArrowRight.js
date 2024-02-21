@@ -14,7 +14,7 @@ const ArrowRight = (props) => (
             <G
                 id="ui-gambling-website-lined-icnos-casinoshunter"
                 transform="translate(-1783.000000, -158.000000)"
-                fill="#1C1C1F"
+                fill={props?.fill ? props?.fill : "#1C1C1F"}
                 fillRule="nonzero"
             >
                 <G id={1} transform="translate(1350.000000, 120.000000)">
