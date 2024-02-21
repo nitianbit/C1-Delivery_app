@@ -1,8 +1,8 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput } from 'react-native-paper';
-import { COLOR, width } from '../../utils/constants';
+import { COLOR, Delivery, Logo, width } from '../../utils/constants';
 import { Button } from 'react-native-paper';
 import { Text, Dialog, Portal, PaperProvider, } from 'react-native-paper';
 import { doPOST } from '../../api/httpUtil';
@@ -10,11 +10,14 @@ import { ENDPOINTS } from '../../api/constants';
 import { SCREEN } from '../../navigation/utils';
 import { useDispatch } from 'react-redux';
 import { addDetails } from '../../store/slices/user';
+import BottomView from '../../components/BottomView';
+import { useLoading } from '../../hooks';
 
 
 
 
 const Signup = ({ navigation }) => {
+    const { loading, toggleLoading } = useLoading();
     const dispatch = useDispatch();
 
     const [data, setData] = useState({
@@ -33,10 +36,14 @@ const Signup = ({ navigation }) => {
 
     const handleContinue = async () => {
         try {
+            if (loading) {
+                return;
+            }
             if (!data.name || !data.email || !data.password) {
                 setError('Please fill all the details.')
                 return showDialog(true)
             }
+            toggleLoading(true)
             const response = await doPOST(ENDPOINTS.signup, data);
             console.log(response)
             if (response?.data?.status >= 400) {
@@ -49,57 +56,71 @@ const Signup = ({ navigation }) => {
 
         } catch (error) {
 
+        } finally {
+            toggleLoading(false)
         }
     }
 
     return (
         <Layout style={styles.layout}>
-            <Text variant="displaySmall">Sign Up!</Text>
-            <TextInput
-                label={<Text>Name</Text>}
-                value={data?.name}
-                onChangeText={(val) => handleChange('name', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <TextInput
-                label={<Text>Email</Text>}
-                value={data?.email}
-                onChangeText={(val) => handleChange('email', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <TextInput
-                label={<Text>Password</Text>}
-                value={data?.password}
-                onChangeText={(val) => handleChange('password', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <Button textColor='#fff' dark={true} disabled={!!(!data.name || !data.email || !data.password)} mode="elevated" style={styles.btn} onPress={handleContinue}>
-                Continue
-            </Button>
-            <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.LOGIN)}>
-                <Text variant="labelLarge" >Already have an account? Login</Text>
-            </TouchableOpacity>
+            <Image resizeMode='contain' style={styles.image} source={Delivery} />
 
-            <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Content>
-                        <Text variant="bodyMedium">{error}</Text>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog}>OK</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+            <BottomView>
+                <Text style={{ textAlign: 'center', marginVertical: 25 }} variant="titleLarge">Sign Up!</Text>
+                <TextInput
+                    label={<Text>Name</Text>}
+                    value={data?.name}
+                    onChangeText={(val) => handleChange('name', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.DARK}
+                    cursorColor={COLOR.DARK}
 
+                />
+                <TextInput
+                    label={<Text>Email</Text>}
+                    value={data?.email}
+                    onChangeText={(val) => handleChange('email', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.DARK}
+                    cursorColor={COLOR.DARK}
+
+                />
+                <TextInput
+                    label={<Text>Password</Text>}
+                    value={data?.password}
+                    onChangeText={(val) => handleChange('password', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.DARK}
+                    cursorColor={COLOR.DARK}
+
+                />
+                <Button loading={loading} textColor='#fff' dark={true} mode="elevated" style={styles.btn} onPress={handleContinue}>
+                    Continue
+                </Button>
+                <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.LOGIN)}>
+                    <Text variant="labelLarge" >Already have an account? Login</Text>
+                </TouchableOpacity>
+
+                <Portal>
+                    <Dialog visible={visible} onDismiss={hideDialog}>
+                        <Dialog.Content>
+                            <Text variant="bodyMedium">{error}</Text>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={hideDialog}>OK</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </BottomView>
         </Layout>
     )
 }
@@ -125,8 +146,8 @@ const styles = StyleSheet.create({
         // bottom: 20
     },
     signupBtn: {
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
         paddingVertical: 10,
 
     },
@@ -135,6 +156,11 @@ const styles = StyleSheet.create({
 
     },
     layout: {
-        backgroundColor: COLOR.SECONDARY_COLOR
+        backgroundColor: COLOR.SECONDARY_WHITE,
+        justifyContent: 'flex-start'
+    },
+    image: {
+        height: '35%',
+        width: width
     }
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput } from 'react-native-paper';
@@ -12,11 +12,14 @@ import { doPOST } from '../../api/httpUtil';
 import { setLocalStorageItem } from '../../storage';
 import { STORAGE_KEYS } from '../../storage/constants';
 import { addDetails } from '../../store/slices/user';
-
+import BottomView from '../../components/BottomView';
+import { Logo, Delivery } from '../../utils/constants';
+import { useLoading } from '../../hooks';
 
 
 
 const Login = ({ navigation }) => {
+    const { loading, toggleLoading } = useLoading()
     const dispatch = useDispatch();
     const [data, setData] = useState({
         password: null,
@@ -31,12 +34,16 @@ const Login = ({ navigation }) => {
 
     const handleContinue = async () => {
         try {
+            if (loading) {
+                return;
+            }
             if (!data.email || !data.password) {
                 setError('Please fill all the details.')
                 return showDialog(true)
             }
+            toggleLoading(true)
             const response = await doPOST(ENDPOINTS.login, data);
-            console.log(response)
+            console.log(response);
             if (response?.data?.status >= 400 || response?.status >= 400) {
                 setError(response.data?.message)
                 showDialog(true);
@@ -47,53 +54,62 @@ const Login = ({ navigation }) => {
             navigation.navigate(SCREEN.TABS)
         } catch (error) {
 
+        } finally {
+            toggleLoading(false);
         }
     }
 
 
     return (
         <Layout style={styles.layout}>
-            <Text variant="displaySmall">Welcome Back!</Text>
-            <TextInput
-                label={<Text>Email</Text>}
-                value={data?.email}
-                onChangeText={(val) => handleChange('email', val)}
-                // keyboardType="numeric"
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <TextInput
-                label={<Text>Password</Text>}
-                value={data?.password}
-                onChangeText={(val) => handleChange('password', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <Button mode="contained" onPress={handleContinue} style={styles.btn}>
-                Continue
-            </Button>
+            <Image resizeMode='contain' style={styles.image} source={Delivery} />
+            <BottomView>
+                <Text style={{ marginVertical: 25 }} variant="titleLarge">Welcome Back!</Text>
+                <TextInput
+                    label={<Text>Email</Text>}
+                    value={data?.email}
+                    onChangeText={(val) => handleChange('email', val)}
+                    // keyboardType="numeric"
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.DARK}
+                    cursorColor={COLOR.DARK}
+                />
+                <TextInput
+                    label={<Text>Password</Text>}
+                    value={data?.password}
+                    onChangeText={(val) => handleChange('password', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.DARK}
+                    cursorColor={COLOR.DARK}
 
-            <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
-                <Text variant="titleMedium" style={{
-                    textDecorationLine: 'underline',
-                    textDecorationColor: 'blue'
-                }} >New User? signup</Text>
-            </TouchableOpacity>
-            <Portal >
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    {/* <Dialog.Title>Error</Dialog.Title> */}
-                    <Dialog.Content>
-                        <Text variant="bodyMedium">{error}</Text>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog}>ok</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+                />
+                <Button loading={loading} mode="contained" onPress={handleContinue} style={styles.btn}>
+                    Continue
+                </Button>
+
+                <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
+                    <Text variant="titleMedium" style={{
+                        textDecorationLine: 'underline',
+                        textDecorationColor: 'blue'
+                    }} >New User? signup</Text>
+                </TouchableOpacity>
+                <Portal >
+                    <Dialog visible={visible} onDismiss={hideDialog}>
+                        <Dialog.Content>
+                            <Text variant="bodyMedium">{error}</Text>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={hideDialog}>ok</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </BottomView>
 
         </Layout>
     )
@@ -119,8 +135,8 @@ const styles = StyleSheet.create({
         // bottom: 20
     },
     signupBtn: {
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
         paddingVertical: 10,
 
     },
@@ -129,6 +145,11 @@ const styles = StyleSheet.create({
 
     },
     layout: {
-        backgroundColor: COLOR.SECONDARY_COLOR
+        backgroundColor: COLOR.SECONDARY_WHITE,
+        justifyContent: 'flex-start'
+    },
+    image: {
+        height: '35%',
+        width: width,
     }
 })
