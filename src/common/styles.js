@@ -17,7 +17,18 @@ export const AppStyles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: COLOR.SECONDARY_COLOR,
+        backgroundColor: COLOR.WHITE,
         paddingHorizontal: 10
     },
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
+    }
 })
