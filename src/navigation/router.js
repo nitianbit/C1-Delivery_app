@@ -75,7 +75,7 @@ const StoreStackRouter = () => {
                     // headerShown: false,
                     gestureEnabled: false,
                     headerTitleAlign: 'center',
-                    headerTitle: 'Welcome'
+                    headerTitle: 'Welcome to Chapati Basket'
                 }}
             />
 

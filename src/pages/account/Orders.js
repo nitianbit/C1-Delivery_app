@@ -1,10 +1,12 @@
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { doGET } from '../../api/httpUtil';
 import { ENDPOINTS } from '../../api/constants';
-import { width } from '../../utils/constants';
+import { COLOR, width } from '../../utils/constants';
+import { AppStyles } from '../../common/styles';
+import { useLoading } from '../../hooks';
 
 
 const data = [
@@ -12,16 +14,19 @@ const data = [
 ]
 
 const Orders = () => {
+    const { loading, toggleLoading } = useLoading()
 
     const [data, setData] = useState([]);
 
     const fetchOrders = async () => {
         try {
+            toggleLoading(true);
             const orders = await doGET(ENDPOINTS.orders);
-            console.log(orders.data.data[0].items)
             setData(orders.data?.data)
         } catch (error) {
 
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -31,36 +36,54 @@ const Orders = () => {
 
     return (
         <Layout>
-            <FlatList
-                data={data}
-                style={{ width: '100%' }}
-                renderItem={({ item: order, index }) => <Card key={index} style={styles.card}>
-                    <Card.Content>
+            <View style={{ display: 'flex', flex: 1, alignItems: 'center', width: width }}>
+                <FlatList
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={loading}
+                            onRefresh={fetchOrders}
+                        />
+                    }
+                    data={data}
+                    style={{ width: '100%' }}
+                    renderItem={({ item: order, index }) => <View key={index} style={styles.card}>
+
                         <View style={styles.statusRow}>
-                            <Text variant="bodyLarge" > Order Status: </Text>
-                            <Text variant="bodyLarge" style={{ fontWeight: 'bold' }}>  {order?.status}</Text>
+                            <Text style={{ color: COLOR.textColor }} variant="bodyLarge" > Order Status: </Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor }}>  {order?.status}</Text>
 
                         </View>
                         <View style={[styles.statusRow, { marginBottom: 10 }]}>
-                            <Text variant="bodyLarge" > Total Amount: </Text>
-                            <Text variant="bodyLarge" style={{ fontWeight: 'bold' }}>  Rs.{order?.totalAmount}</Text>
+                            <Text style={{ color: COLOR.textColor }} variant="bodyLarge" > Total Amount: </Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor }}>  Rs.{order?.totalAmount}</Text>
 
                         </View>
 
                         {
                             order?.items?.map((item, itemIndex) => <View key={itemIndex} style={styles.statusRow}>
-                                <Text variant="bodySmall">{item.name} x {item.quantity}</Text>
-                                <Text variant="bodySmall">Rs. {item.price * item.quantity}</Text>
+                                <Text style={{ color: COLOR.textColor }} variant="bodySmall">{item.name} x {item.quantity}</Text>
+                                {item?.price && item?.quantity ? <Text style={{ color: COLOR.textColor }} variant="bodySmall">Rs. {item.price * item.quantity}</Text> : null}
                             </View>)
                         }
+                        {order?.driverInfo?.name ?
+                            <View>
+                                <Text style={{ color: COLOR.textColor, paddingTop: 20 }} variant="bodyLarge">Driver Details:</Text>
+                                <View style={[styles.statusRow, { marginBottom: 10 }]}>
+                                    <Text style={{ color: COLOR.textColor }} variant="bodyMedium" >{order?.driverInfo?.name}</Text>
+                                    <Text variant="bodyMedium" style={{ fontWeight: 'bold', color: COLOR.textColor }}>{order?.driverInfo?.mob_no}</Text>
+                                </View>
+                            </View>
+                            : null}
 
-                    </Card.Content>
-                </Card>}
-            />
 
-            <Card style={[styles.card, { paddingVertical: 5, width: width - 20 }]}>
-                <Text style={{ textAlign: 'center' }}>For any query, Please contact us at 9971164333</Text>
-            </Card>
+                    </View>}
+                />
+
+                <View style={[styles.card, { paddingVertical: 5, width: width - 20 }]}>
+                    <Text style={{ textAlign: 'center', color: COLOR.textColor }}>For any query, Please contact us at 9971164333</Text>
+                </View>
+
+            </View>
         </Layout>
     )
 }
@@ -81,8 +104,14 @@ const styles = StyleSheet.create({
         // bottom: 20
     },
     card: {
-        width: '100%',
-        marginVertical: 10
+        width: width - 20,
+        marginVertical: 10,
+        ...AppStyles.shadow,
+        backgroundColor: COLOR.panelBackground,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        alignSelf: 'center'
     },
     statusRow: {
         flexDirection: 'row',

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doPOST, doPUT } from '../../api/httpUtil';
 import { ENDPOINTS } from '../../api/constants';
 import { addDetails } from '../../store/slices/user';
-import { COLOR, Logo, width } from '../../utils/constants';
+import { COLOR, Logo, UserLogo, width } from '../../utils/constants';
 import TopView from '../../components/TopView';
 import BottomView from '../../components/BottomView';
 
@@ -62,7 +62,7 @@ const Profile = ({ navigation }) => {
     return (
         <Layout style={{ justifyContent: 'flex-start' }}>
             <TopView>
-                <Image source={Logo} style={styles.banner} />
+                <Image source={UserLogo} style={{ height: 150, width: 150 }} />
             </TopView>
             <BottomView>
 

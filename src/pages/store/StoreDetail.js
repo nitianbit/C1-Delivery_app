@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet } from 'react-native';
+import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { Button, Card, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
 import { doGET } from '../../api/httpUtil';
+import { AppStyles } from '../../common/styles';
 import BottomView from '../../components/BottomView';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
@@ -52,11 +53,11 @@ const StoreDetail = ({ navigation }) => {
                     data={data}
                     renderItem={({ item, index }) => <CartItem key={index} {...item} />}
                 />
-                {cartItems?.length > 0 ? <Card style={styles.card}>
-                    <Card.Content>
-                        <Text variant="bodyLarge">Total Price:     Rs {totalPrice()}</Text>
-                    </Card.Content>
-                </Card> : null}
+                {cartItems?.length > 0 ?
+                    <View style={[AppStyles.shadow, { backgroundColor: COLOR.panelBackground, padding: 10, margin: 10, width: width - 45, borderRadius: 10 }]}>
+                        <Text style={{ color: COLOR.textColor }} variant="bodyLarge">Total Price:      Rs {totalPrice()}</Text>
+                    </View>
+                    : null}
 
                 <Button textColor='#fff' buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
                     Checkout

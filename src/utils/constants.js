@@ -11,7 +11,7 @@ export const COLOR = {
     SECONDARY_COLOR: '#f6f0ea',
     INPUT_COLOR: '#f7e4c4',
     WHITE: '#FFF',
-    SECONDARY_WHITE: '#d6d6d6',
+    SECONDARY_WHITE: '#F8F8FF',
     CREAM_WHITE: '#f4f4f4',
 
     textColor: "#42145F",

@@ -64,39 +64,38 @@ const Login = ({ navigation }) => {
         <Layout style={styles.layout}>
             <Image resizeMode='contain' style={styles.image} source={Delivery} />
             <BottomView>
-                <Text style={{ marginVertical: 25 }} variant="titleLarge">Welcome Back!</Text>
+                <Text style={{ marginVertical: 25, color: COLOR.textColor }} variant="titleLarge">Welcome Back!</Text>
                 <TextInput
-                    label={<Text>Email</Text>}
+                    label={<Text style={{ color: COLOR.textColor }}>Email</Text>}
                     value={data?.email}
                     onChangeText={(val) => handleChange('email', val)}
                     // keyboardType="numeric"
                     style={styles.input}
                     mode="flat"
-                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                    underlineColor={COLOR.SECONDARY_COLOR}
-                    textColor={COLOR.DARK}
-                    cursorColor={COLOR.DARK}
+                    activeUnderlineColor={COLOR.panelBackground}
+                    underlineColor={COLOR.panelBackground}
+                    textColor={COLOR.textColor}
+                    cursorColor={COLOR.textColor}
                 />
                 <TextInput
-                    label={<Text>Password</Text>}
+                    label={<Text style={{ color: COLOR.textColor }}>Password</Text>}
                     value={data?.password}
                     onChangeText={(val) => handleChange('password', val)}
                     style={styles.input}
                     mode="flat"
-                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                    underlineColor={COLOR.SECONDARY_COLOR}
-                    textColor={COLOR.DARK}
-                    cursorColor={COLOR.DARK}
+                    activeUnderlineColor={COLOR.panelBackground}
+                    underlineColor={COLOR.panelBackground}
+                    textColor={COLOR.textColor}
+                    cursorColor={COLOR.textColor}
 
                 />
-                <Button loading={loading} mode="contained" onPress={handleContinue} style={styles.btn}>
+                <Button textColor='#FFF' loading={loading} mode="contained" onPress={handleContinue} style={styles.btn}>
                     Continue
                 </Button>
 
                 <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
                     <Text variant="titleMedium" style={{
-                        textDecorationLine: 'underline',
-                        textDecorationColor: 'blue'
+                        color: COLOR.textColor
                     }} >New User? signup</Text>
                 </TouchableOpacity>
                 <Portal >
@@ -119,11 +118,12 @@ export default Login
 
 const styles = StyleSheet.create({
     input: {
-        width: '100%',
+        width: width - 40,
         marginVertical: 10,
-        backgroundColor: COLOR.BG_COLOR,
+        backgroundColor: COLOR.panelBackground,
         borderWidth: 1,
-        borderColor: COLOR.SECONDARY_COLOR,
+        borderColor: COLOR.panelBackground,
+        borderRadius: 10
     },
     btn: {
         width: '100%',

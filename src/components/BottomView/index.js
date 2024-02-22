@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLOR, width } from '../../utils/constants'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { AppStyles } from '../../common/styles'
 
 const BottomView = ({ children }) => {
     return (
@@ -26,7 +27,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         paddingHorizontal: 20,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        ...AppStyles.shadow
     },
     scrollView: {
         backgroundColor: COLOR.WHITE,

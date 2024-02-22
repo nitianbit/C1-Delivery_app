@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, FlatList, Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Button, Dialog, Portal, Text, Card, Checkbox, Switch, Snackbar, } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
@@ -102,19 +102,19 @@ const Payment = ({ navigation, route }) => {
                 />
                 <View style={{ marginBottom: 20 }} />
                 <Text style={{ color: '#000' }} variant="bodyLarge">OR </Text>
-                <View style={styles.card} onPress={copyToClipboard}>
+                <TouchableOpacity style={styles.card} onPress={copyToClipboard}>
                     <View style={styles.content}>
                         <Text style={styles.text} variant="bodyLarge">UPI ID: {upi} </Text>
                         <CopyIcon fill={COLOR.textColor} />
                     </View>
-                </View>
-                <View style={styles.card} onPress={sendWhatsApp}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card} onPress={sendWhatsApp}>
                     <View style={styles.content}>
                         <Text style={styles.text} variant="bodyLarge">Send Screenshot to Whatsapp </Text>
                         <ArrowRight />
                     </View>
-                </View>
-                <View style={styles.card} onPress={sendWhatsApp}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card} onPress={sendWhatsApp}>
                     <View style={styles.content}>
                         <Text style={styles.text} variant="bodyLarge">Payment Done </Text>
                         <Switch
@@ -125,7 +125,7 @@ const Payment = ({ navigation, route }) => {
                             }}
                         />
                     </View>
-                </View>
+                </TouchableOpacity>
 
 
                 <Button loading={loading} textColor='#FFF' buttonColor={COLOR.DARK} style={[styles.btn, { opacity: paymentDone ? 1 : 0.4 }]} mode="contained" onPress={handleContinue}>
