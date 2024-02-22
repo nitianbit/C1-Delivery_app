@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, FlatList, Linking, ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Dialog, Portal, Text, Card, Checkbox, Switch, } from 'react-native-paper';
+import { Button, Dialog, Portal, Text, Card, Checkbox, Switch, Snackbar, } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
 import { doPOST } from '../../api/httpUtil';
@@ -13,12 +13,20 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import CopyIcon from '../../assets/icons/CopyIcon';
 import ArrowRight from '../../assets/icons/ArrowRight';
 import { SCREEN } from '../../navigation/utils';
+import { useLoading } from '../../hooks';
+import { AppStyles } from '../../common/styles';
 
 
 
 const Payment = ({ navigation, route }) => {
     const dispatch = useDispatch();
+    const { loading: snackVisible, toggleLoading: toggleSnackVisible } = useLoading()
+    const { loading, toggleLoading } = useLoading()
     const cartItems = useSelector(state => state.cart.items);
+
+    const onToggleSnackBar = () => toggleSnackVisible(true);
+
+    const onDismissSnackBar = () => toggleSnackVisible(false);
 
 
     const [visible, setVisible] = useState(false);
@@ -34,7 +42,8 @@ const Payment = ({ navigation, route }) => {
 
     const copyToClipboard = () => {
         Clipboard.setString(upi);
-        Alert.alert('UPI Copied!')
+        // Alert.alert('UPI Copied!')
+        onToggleSnackBar()
     };
 
 
@@ -46,6 +55,13 @@ const Payment = ({ navigation, route }) => {
 
     const handleContinue = async () => {
         try {
+            if (loading) {
+                return;
+            }
+            if (!paymentDone) {
+                return;
+            }
+            toggleLoading(true)
             const items = cartItems?.map(item => ({ menuItemId: item._id, quantity: item.quantity, name: item.name }));
             const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address, phoneNo: route?.params?.phone });
 
@@ -69,48 +85,50 @@ const Payment = ({ navigation, route }) => {
             }
         } catch (error) {
 
+        } finally {
+            toggleLoading(false)
         }
     }
     return (
         <Layout style={styles.container}>
             <ScrollView bounces={false} contentContainerStyle={styles.ScrollView} showsVerticalScrollIndicator={false}>
-                <Text style={{ textAlign: 'center' }} variant="titleMedium">Scan this QR code or copy the UPI for payment. After successful payment, send the screenshot to the WhatsApp number below.</Text>
-                <View style={{ marginTop: 50 }} />
+                <Text style={{ textAlign: 'center', color: COLOR.textColor }} variant="titleMedium">Scan this QR code or copy the UPI for payment. After successful payment, send the screenshot to the WhatsApp number below.</Text>
+                <View style={{ marginTop: 20 }} />
                 <QRCode
                     value={upi}
-                    size={200}
+                    size={120}
                     logoBackgroundColor='transparent'
 
                 />
                 <View style={{ marginBottom: 20 }} />
-                <Text variant="bodyLarge">OR </Text>
-                <Card style={styles.card} onPress={copyToClipboard}>
-                    <Card.Content style={styles.content}>
-                        <Text variant="bodyLarge">UPI ID: {upi} </Text>
-                        <CopyIcon />
-                    </Card.Content>
-                </Card>
-                <Card style={styles.card} onPress={sendWhatsApp}>
-                    <Card.Content style={styles.content}>
-                        <Text variant="bodyLarge">Send Screenshot to Whatsapp </Text>
+                <Text style={{ color: '#000' }} variant="bodyLarge">OR </Text>
+                <View style={styles.card} onPress={copyToClipboard}>
+                    <View style={styles.content}>
+                        <Text style={styles.text} variant="bodyLarge">UPI ID: {upi} </Text>
+                        <CopyIcon fill={COLOR.textColor} />
+                    </View>
+                </View>
+                <View style={styles.card} onPress={sendWhatsApp}>
+                    <View style={styles.content}>
+                        <Text style={styles.text} variant="bodyLarge">Send Screenshot to Whatsapp </Text>
                         <ArrowRight />
-                    </Card.Content>
-                </Card>
-                <Card style={styles.card} onPress={sendWhatsApp}>
-                    <Card.Content style={styles.content}>
-                        <Text variant="bodyLarge">Payment Done </Text>
+                    </View>
+                </View>
+                <View style={styles.card} onPress={sendWhatsApp}>
+                    <View style={styles.content}>
+                        <Text style={styles.text} variant="bodyLarge">Payment Done </Text>
                         <Switch
-                            color={COLOR.THEME_COLOR}
+                            color={COLOR.textColor}
                             value={paymentDone}
                             onValueChange={() => {
                                 setpaymentDone(prev => !prev);
                             }}
                         />
-                    </Card.Content>
-                </Card>
+                    </View>
+                </View>
 
 
-                <Button buttonColor={COLOR.THEME_COLOR} disabled={!paymentDone} style={styles.btn} mode="contained" onPress={handleContinue}>
+                <Button loading={loading} textColor='#FFF' buttonColor={COLOR.DARK} style={[styles.btn, { opacity: paymentDone ? 1 : 0.4 }]} mode="contained" onPress={handleContinue}>
                     Order
                 </Button>
             </ScrollView>
@@ -124,6 +142,14 @@ const Payment = ({ navigation, route }) => {
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Snackbar
+                visible={snackVisible}
+                onDismiss={onDismissSnackBar}
+                duration={3000}
+            >
+                UPI Copied!
+            </Snackbar>
+
         </Layout>
     )
 }
@@ -132,8 +158,14 @@ export default Payment
 
 const styles = StyleSheet.create({
     card: {
-        width: '100%',
-        marginVertical: 10
+        width: width - 40,
+        marginVertical: 10,
+        backgroundColor: COLOR.panelBackground,
+        ...AppStyles.shadow,
+        padding: 10,
+        paddingVertical: 15,
+        borderRadius: 10
+
     },
     container: {
         justifyContent: 'flex-start'
@@ -150,7 +182,11 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginVertical: 10,
-        width: width - 40,
-        paddingVertical: 5
+        width: width - 30,
+        paddingVertical: 5,
+        borderRadius: 10
     },
+    text: {
+        color: COLOR.textColor
+    }
 })

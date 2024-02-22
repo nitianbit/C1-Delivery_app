@@ -1,10 +1,13 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { Button, Card, Text } from 'react-native-paper';
 import { SCREEN } from '../../navigation/utils';
-import { width } from '../../utils/constants';
+import { COLOR, Logo, UserLogo, width } from '../../utils/constants';
 import Banner from '../../assets/images/Logo.jpeg'
+import BottomView from '../../components/BottomView';
+import TopView from '../../components/TopView';
+import { AppStyles } from '../../common/styles';
 
 
 
@@ -17,17 +20,24 @@ const Dashboard = ({ navigation }) => {
 
     return (
         <Layout style={styles.layout}>
-            <Image source={Banner} style={styles.banner} />
-            <Card onPress={handleChange} style={styles.card}>
-                <Card.Content style={styles.imageRow}>
-                    <Image style={{ height: 80, width: 80, borderRadius: 20 }} source={{ uri: 'https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg' }} />
-                    <View style={{ flexShrink: 1, marginLeft: 10 }}>
-                        <Text variant="titleLarge">ChapatiBasket</Text>
-                        <Text numberOfLines={2} variant="bodyMedium" style={styles.desc}>{/* ChapatiBasket is a mobile application that allows users to order and purchase chapati, a traditional Indian flatbread. */} The app offers a variety of chapati options and allows for easy and convenient ordering and payment</Text>
+            {/* <Image source={Banner} style={styles.banner} /> */}
+            <TopView>
+                <Image source={Logo} style={styles.banner} />
+
+            </TopView>
+            <BottomView>
+                <TouchableOpacity onPress={handleChange} style={styles.card}>
+                    <View style={styles.imageRow}>
+                        <Image style={{ height: 80, width: 80, borderRadius: 20 }} source={Logo} />
+                        <View style={{ flexShrink: 1, marginLeft: 10 }}>
+                            <Text style={{ color: COLOR.textColor }} variant="titleLarge">ChapatiBasket</Text>
+                            <Text numberOfLines={2} variant="bodyMedium" style={styles.desc}>{/* ChapatiBasket is a mobile application that allows users to order and purchase chapati, a traditional Indian flatbread. */} The app offers a variety of chapati options and allows for easy and convenient ordering and payment</Text>
+                        </View>
                     </View>
-                </Card.Content>
-                <Text variant="titleMedium" style={styles.orderNow}>Order Now</Text>
-            </Card>
+                    <Text variant="titleMedium" style={styles.orderNow}>Order Now</Text>
+                </TouchableOpacity>
+
+            </BottomView>
         </Layout>
     )
 }
@@ -48,11 +58,17 @@ const styles = StyleSheet.create({
         // bottom: 20
     },
     card: {
-        width: '100%',
-        marginVertical: 10
+        width: width - 45,
+        marginVertical: 10,
+        marginVertical: 10,
+        backgroundColor: COLOR.panelBackground,
+        ...AppStyles.shadow,
+        borderRadius: 10,
+        padding: 10
     },
     desc: {
         marginVertical: 10,
+        color: COLOR.textColor
     },
     layout: {
         justifyContent: 'flex-start',
@@ -60,6 +76,7 @@ const styles = StyleSheet.create({
     orderNow: {
         textAlign: 'right',
         padding: 10,
+        color: COLOR.textColor
     },
     imageRow: {
         display: 'flex',
@@ -67,9 +84,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5
     },
     banner: {
-        height: 200,
-        width: width - 20,
+        height: '100%',
+        width: width,
         borderRadius: 10,
-        marginTop: 10
+        // marginTop: 10
     }
 })

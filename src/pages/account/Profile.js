@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, Image, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput, Button, Text, Dialog, Portal, } from 'react-native-paper';
@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doPOST, doPUT } from '../../api/httpUtil';
 import { ENDPOINTS } from '../../api/constants';
 import { addDetails } from '../../store/slices/user';
-import { COLOR } from '../../utils/constants';
+import { COLOR, Logo, width } from '../../utils/constants';
+import TopView from '../../components/TopView';
+import BottomView from '../../components/BottomView';
 
 const Profile = ({ navigation }) => {
     const user = useSelector(state => state.user.details);
@@ -58,17 +60,25 @@ const Profile = ({ navigation }) => {
     }
 
     return (
-        <Layout>
-            <TextInput
-                label={<Text>Name</Text>}
-                value={data?.name}
-                onChangeText={(val) => handleChange('name', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            {/* <TextInput
+        <Layout style={{ justifyContent: 'flex-start' }}>
+            <TopView>
+                <Image source={Logo} style={styles.banner} />
+            </TopView>
+            <BottomView>
+
+
+                <TextInput
+                    label={<Text style={{ color: COLOR.textColor }}>Name</Text>}
+                    value={data?.name}
+                    onChangeText={(val) => handleChange('name', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.textColor}
+                    placeholderTextColor='#999'
+                />
+                {/* <TextInput
                 label="Phone"
                 value={data?.phone}
                 onChangeText={(val) => handleChange('phone', val)}
@@ -76,40 +86,45 @@ const Profile = ({ navigation }) => {
                 keyboardType={"number-pad"}
                 mode="outlined"
             /> */}
-            <TextInput
-                label={<Text>Email</Text>}
-                value={data?.email}
-                onChangeText={(val) => handleChange('email', val)}
-                style={styles.input}
-                mode="flat"
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <TextInput
-                label={<Text>New Password (Optional)</Text>}
-                placeholder='Enter New Password'
-                value={data?.password}
-                onChangeText={(val) => handleChange('password', val)}
-                style={styles.input}
-                mode="flat"
-                secureTextEntry={true}
-                activeUnderlineColor={COLOR.SECONDARY_COLOR}
-                underlineColor={COLOR.SECONDARY_COLOR}
-            />
-            <Button buttonColor={COLOR.THEME_COLOR} disabled={!!(!data.name || !data.email)} mode="contained" onPress={updateProfile} style={styles.btn}>
-                Save
-            </Button>
-            <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>Error</Dialog.Title>
-                    <Dialog.Content>
-                        <Text variant="bodyMedium">{error}</Text>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog}>ok</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+                <TextInput
+                    label={<Text style={{ color: COLOR.textColor }}>Email</Text>}
+                    value={data?.email}
+                    onChangeText={(val) => handleChange('email', val)}
+                    style={styles.input}
+                    mode="flat"
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.textColor}
+                    placeholderTextColor='#999'
+                />
+                <TextInput
+                    label={<Text style={{ color: COLOR.textColor }}>New Password (Optional)</Text>}
+                    placeholder='Enter New Password'
+                    value={data?.password}
+                    onChangeText={(val) => handleChange('password', val)}
+                    style={styles.input}
+                    mode="flat"
+                    secureTextEntry={true}
+                    activeUnderlineColor={COLOR.SECONDARY_COLOR}
+                    underlineColor={COLOR.SECONDARY_COLOR}
+                    textColor={COLOR.textColor}
+                    placeholderTextColor='#999'
+
+                />
+                <Button textColor='#FFF' buttonColor={COLOR.THEME_COLOR} disabled={!!(!data.name || !data.email)} mode="contained" onPress={updateProfile} style={styles.btn}>
+                    Save
+                </Button>
+                <Portal>
+                    <Dialog visible={visible} onDismiss={hideDialog}>
+                        <Dialog.Content>
+                            <Text variant="bodyMedium">{error}</Text>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={hideDialog}>ok</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </BottomView>
         </Layout>
     )
 }
@@ -131,5 +146,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
         // position: 'absolute',
         // bottom: 20
+    },
+    banner: {
+        height: '100%',
+        width: width,
+        borderRadius: 10,
     }
 })

@@ -75,7 +75,7 @@ const StoreStackRouter = () => {
                     // headerShown: false,
                     gestureEnabled: false,
                     headerTitleAlign: 'center',
-                    headerTitle: 'Delivery'
+                    headerTitle: 'Welcome'
                 }}
             />
 
@@ -95,26 +95,33 @@ const StoreStackRouter = () => {
 
 function Tabs() {
     return (
-        <Tab.Navigator initialRouteName={SCREEN.STORESTACKSCREEN}>
+        <Tab.Navigator initialRouteName={SCREEN.STORESTACKSCREEN} screenOptions={{
+            tabBarStyle: {
+                // backgroundColor: COLOR.CREAM_WHITE,
+                height: 60
+            }
+        }}>
             <Tab.Screen
                 name={SCREEN.STORESTACKSCREEN}
                 component={StoreStackRouter}
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Delivery</Text>),
-                    tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? COLOR.THEME_COLOR : '#999'} />)
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }} >Delivery</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? COLOR.textColor : '#999'} />)
                 }}
             />
             <Tab.Screen
                 name={SCREEN.CART}
                 component={Cart}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Cart</Text>),
-                    tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? COLOR.THEME_COLOR : '#999'} />),
-
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }} >Cart</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? COLOR.textColor : '#999'} />),
+                    title: 'Your Cart',
+                    headerTitleAlign: 'center',
+                    headerShadowVisible: true
 
                 }}
             />
@@ -125,8 +132,8 @@ function Tabs() {
                     headerShown: false,
                     gestureEnabled: false,
                     // tabBarLabel: 'Account',
-                    tabBarLabel: (({ focused, color, size }) => <Text color={focused ? COLOR.THEME_COLOR : '#999'} >Account</Text>),
-                    tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? COLOR.THEME_COLOR : '#999'} />)
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }}>Account</Text>),
+                    tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? COLOR.textColor : '#999'} />)
                 }}
             />
 

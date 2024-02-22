@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from '../../storage/constants'
 import User from '../../assets/icons/User'
 import { UserLogo } from '../../utils/constants'
 import BottomView from '../../components/BottomView'
+import TopView from '../../components/TopView'
 
 
 
@@ -25,11 +26,12 @@ const Account = ({ navigation }) => {
     return (
         <Layout style={{ justifyContent: 'flex-start', }}>
 
-            <View style={styles.topView}>
+            <TopView>
                 <Image style={{ height: 100, width: 100 }} source={UserLogo} />
                 <Text variant="titleLarge" style={{ color: COLOR.DARK, fontWeight: 'bold' }}>Hello {user?.name}!</Text>
                 <Text variant="bodyMedium" style={{ color: COLOR.DARK }}> {user?.email}</Text>
-            </View>
+            </TopView>
+
 
             <BottomView>
                 <FlatList
