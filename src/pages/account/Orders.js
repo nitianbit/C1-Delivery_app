@@ -7,6 +7,7 @@ import { ENDPOINTS } from '../../api/constants';
 import { COLOR, width } from '../../utils/constants';
 import { AppStyles } from '../../common/styles';
 import { useLoading } from '../../hooks';
+import EmptyCart from '../../assets/icons/EmptyCart';
 
 
 const data = [
@@ -77,6 +78,10 @@ const Orders = () => {
 
 
                     </View>}
+                    ListEmptyComponent={() => <View style={styles.noItem}>
+                        <EmptyCart />
+                        <Text style={styles.noItemView}>No Recent Orders.</Text>
+                    </View>}
                 />
 
                 <View style={[styles.card, { paddingVertical: 5, width: width - 20 }]}>
@@ -116,5 +121,11 @@ const styles = StyleSheet.create({
     statusRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }
+    },
+    noItem: {
+        alignSelf: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 200
+    },
 })
