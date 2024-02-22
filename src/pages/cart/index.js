@@ -105,9 +105,9 @@ const Cart = ({ navigation }) => {
                     </View>
                     : null}
 
-                <Button buttonColor={COLOR.DARK} textColor={COLOR.CREAM_WHITE} style={[styles.btn, { opacity: (!cartItems.length || !address || !phone) ? 0.4 : 1 }]} mode="contained" onPress={handleContinue}>
+                {cartItems?.length > 0 ? <Button buttonColor={COLOR.DARK} textColor={COLOR.CREAM_WHITE} style={[styles.btn, { opacity: (!cartItems.length || !address || !phone) ? 0.4 : 1 }]} mode="contained" onPress={handleContinue}>
                     Continue for Payment
-                </Button>
+                </Button> : null}
                 <Portal>
                     <Dialog visible={visible} onDismiss={hideDialog}>
                         <Dialog.Title>Error</Dialog.Title>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         display: 'flex',
         alignItems: 'center',
-        marginTop: 200
+        // marginTop: 200
     },
     logo: {
         height: '100%',

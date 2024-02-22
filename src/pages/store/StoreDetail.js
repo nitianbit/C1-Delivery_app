@@ -59,9 +59,9 @@ const StoreDetail = ({ navigation }) => {
                     </View>
                     : null}
 
-                <Button textColor='#fff' buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
+                {cartItems?.length > 0 ? <Button textColor='#fff' buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
                     Checkout
-                </Button>
+                </Button> : null}
             </BottomView>
 
         </Layout>
