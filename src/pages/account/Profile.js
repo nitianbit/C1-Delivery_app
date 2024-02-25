@@ -9,6 +9,7 @@ import { addDetails } from '../../store/slices/user';
 import { COLOR, Logo, UserLogo, width } from '../../utils/constants';
 import TopView from '../../components/TopView';
 import BottomView from '../../components/BottomView';
+import { AppStyles } from '../../common/styles';
 
 const Profile = ({ navigation }) => {
     const user = useSelector(state => state.user.details);
@@ -68,7 +69,7 @@ const Profile = ({ navigation }) => {
 
 
                 <TextInput
-                    label={<Text style={{ color: COLOR.textColor }}>Name</Text>}
+                    label={<Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }}>Name</Text>}
                     value={data?.name}
                     onChangeText={(val) => handleChange('name', val)}
                     style={styles.input}
@@ -87,7 +88,7 @@ const Profile = ({ navigation }) => {
                 mode="outlined"
             /> */}
                 <TextInput
-                    label={<Text style={{ color: COLOR.textColor }}>Email</Text>}
+                    label={<Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }}>Email</Text>}
                     value={data?.email}
                     onChangeText={(val) => handleChange('email', val)}
                     style={styles.input}
@@ -98,7 +99,7 @@ const Profile = ({ navigation }) => {
                     placeholderTextColor='#999'
                 />
                 <TextInput
-                    label={<Text style={{ color: COLOR.textColor }}>New Password (Optional)</Text>}
+                    label={<Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }}>New Password (Optional)</Text>}
                     placeholder='Enter New Password'
                     value={data?.password}
                     onChangeText={(val) => handleChange('password', val)}
@@ -117,7 +118,7 @@ const Profile = ({ navigation }) => {
                 <Portal>
                     <Dialog visible={visible} onDismiss={hideDialog}>
                         <Dialog.Content>
-                            <Text variant="bodyMedium">{error}</Text>
+                            <Text style={AppStyles.fontStyle} variant="bodyMedium">{error}</Text>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={hideDialog}>ok</Button>

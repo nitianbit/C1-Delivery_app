@@ -1,8 +1,8 @@
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image, Platform } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import { TextInput } from 'react-native-paper';
-import { COLOR, width } from '../../utils/constants';
+import { COLOR, FONT, width } from '../../utils/constants';
 import { Button, Dialog, Portal, } from 'react-native-paper';
 import { Text } from 'react-native-paper';
 import { SCREEN } from '../../navigation/utils';
@@ -15,6 +15,7 @@ import { addDetails } from '../../store/slices/user';
 import BottomView from '../../components/BottomView';
 import { Logo, Delivery } from '../../utils/constants';
 import { useLoading } from '../../hooks';
+import { MyText, MyTextInput } from '../../components/MyText';
 
 
 
@@ -64,9 +65,9 @@ const Login = ({ navigation }) => {
         <Layout style={styles.layout}>
             <Image resizeMode='contain' style={styles.image} source={Delivery} />
             <BottomView>
-                <Text style={{ marginVertical: 25, color: COLOR.textColor }} variant="titleLarge">Welcome Back!</Text>
+                <Text style={{ marginVertical: 25, color: COLOR.textColor, fontFamily: FONT.HELVETICA_MEDIUM[Platform.OS] }} variant="titleLarge">Welcome Back!</Text>
                 <TextInput
-                    label={<Text style={{ color: COLOR.textColor }}>Email</Text>}
+                    label={<Text style={{ color: COLOR.textColor, fontFamily: FONT.HELVETICA_MEDIUM[Platform.OS] }}>Email</Text>}
                     value={data?.email}
                     onChangeText={(val) => handleChange('email', val)}
                     // keyboardType="numeric"
@@ -78,7 +79,7 @@ const Login = ({ navigation }) => {
                     cursorColor={COLOR.textColor}
                 />
                 <TextInput
-                    label={<Text style={{ color: COLOR.textColor }}>Password</Text>}
+                    label={<Text style={{ color: COLOR.textColor, fontFamily: FONT.HELVETICA_MEDIUM[Platform.OS] }}>Password</Text>}
                     value={data?.password}
                     onChangeText={(val) => handleChange('password', val)}
                     style={styles.input}
@@ -95,13 +96,14 @@ const Login = ({ navigation }) => {
 
                 <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.SIGNUP)}>
                     <Text variant="titleMedium" style={{
-                        color: COLOR.textColor
+                        color: COLOR.textColor,
+                        fontFamily: FONT.HELVETICA_MEDIUM[Platform.OS]
                     }} >New User? signup</Text>
                 </TouchableOpacity>
                 <Portal >
                     <Dialog visible={visible} onDismiss={hideDialog}>
                         <Dialog.Content>
-                            <Text variant="bodyMedium">{error}</Text>
+                            <Text style={{ fontFamily: FONT.HELVETICA_MEDIUM[Platform.OS] }} variant="bodyMedium">{error}</Text>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={hideDialog}>ok</Button>
@@ -123,14 +125,14 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.panelBackground,
         borderWidth: 1,
         borderColor: COLOR.panelBackground,
-        borderRadius: 10
+        borderRadius: 10,
     },
     btn: {
         width: '100%',
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 20,
-        backgroundColor: COLOR.THEME_COLOR
+        backgroundColor: COLOR.THEME_COLOR,
         // position: 'absolute',
         // bottom: 20
     },

@@ -50,29 +50,35 @@ const Orders = () => {
                     renderItem={({ item: order, index }) => <View key={index} style={styles.card}>
 
                         <View style={styles.statusRow}>
-                            <Text style={{ color: COLOR.textColor }} variant="bodyLarge" > Order Status: </Text>
-                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor }}>  {order?.status}</Text>
+                            <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge" > Order Status: </Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', ...AppStyles.fontStyle, color: COLOR.textColor }}>  {order?.status}</Text>
 
                         </View>
                         <View style={[styles.statusRow, { marginBottom: 10 }]}>
-                            <Text style={{ color: COLOR.textColor }} variant="bodyLarge" > Total Amount: </Text>
-                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor }}>  Rs.{order?.totalAmount}</Text>
+                            <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge" > Total Amount: </Text>
+                            <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor, ...AppStyles.fontStyle }}>  Rs.{order?.totalAmount}</Text>
 
                         </View>
 
                         {
-                            order?.items?.map((item, itemIndex) => <View key={itemIndex} style={styles.statusRow}>
-                                <Text style={{ color: COLOR.textColor }} variant="bodySmall">{item.name} x {item.quantity}</Text>
-                                {item?.price && item?.quantity ? <Text style={{ color: COLOR.textColor }} variant="bodySmall">Rs. {item.price * item.quantity}</Text> : null}
+                            order?.items?.map((item, itemIndex) => <View key={itemIndex} style={[styles.statusRow, { paddingLeft: 5 }]}>
+                                <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodySmall">{item.name} x {item.quantity}</Text>
+                                {item?.price && item?.quantity ? <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodySmall">Rs. {item.price * item.quantity}</Text> : null}
                             </View>)
                         }
                         {order?.driverInfo?.name ?
                             <View>
                                 <Text style={{ color: COLOR.textColor, paddingTop: 20 }} variant="bodyLarge">Driver Details:</Text>
                                 <View style={[styles.statusRow, { marginBottom: 10 }]}>
-                                    <Text style={{ color: COLOR.textColor }} variant="bodyMedium" >{order?.driverInfo?.name}</Text>
-                                    <Text variant="bodyMedium" style={{ fontWeight: 'bold', color: COLOR.textColor }}>{order?.driverInfo?.mob_no}</Text>
+                                    <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyMedium" >{order?.driverInfo?.name}</Text>
+                                    <Text variant="bodyMedium" style={{ fontWeight: 'bold', color: COLOR.textColor, ...AppStyles.fontStyle }}>{order?.driverInfo?.mob_no}</Text>
                                 </View>
+                            </View>
+                            : null}
+                        {order?.status === 'Confirm' && order?.deliveryTime ?
+                            <View style={[styles.statusRow, { marginTop: 10 }]}>
+                                <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge" >Delivery Time: </Text>
+                                <Text variant="bodyLarge" style={{ fontWeight: 'bold', color: COLOR.textColor, ...AppStyles.fontStyle }}>{order?.deliveryTime}</Text>
                             </View>
                             : null}
 
@@ -80,12 +86,12 @@ const Orders = () => {
                     </View>}
                     ListEmptyComponent={() => <View style={styles.noItem}>
                         <EmptyCart />
-                        <Text style={styles.noItemView}>No Recent Orders.</Text>
+                        <Text style={[styles.noItemView, AppStyles.fontStyle]}>No Recent Orders.</Text>
                     </View>}
                 />
 
                 <View style={[styles.card, { paddingVertical: 5, width: width - 20 }]}>
-                    <Text style={{ textAlign: 'center', color: COLOR.textColor }}>For any query, Please contact us at 9971164333</Text>
+                    <Text style={{ textAlign: 'center', color: COLOR.textColor, ...AppStyles.fontStyle }}>For any query, Please contact us at 9971164333</Text>
                 </View>
 
             </View>

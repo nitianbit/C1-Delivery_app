@@ -21,8 +21,40 @@ export const COLOR = {
 
 export const { height, width } = Dimensions.get('screen');
 
+const FONT = {
+    FONT_BOLD: {
+        android: 'owners-wide-bold',
+        ios: 'OwnersWide-Bold'
+    },
+    FONT_LIGHT: {
+        android: 'owners-wide-xlight',
+        ios: 'OwnersWide-XLight'
+    },
+    FONT_BLACK: {
+        android: 'owners-wide-xblack',
+        ios: 'OwnersWide-XBlack'
+    },
+    HELVETICA_BOLD: {
+        android: 'HelveticaNeue-Bold',
+        ios: 'HelveticaNeue-Bold'
+    },
+    HELVETICA: {
+        android: 'HelveticaNeue',
+        ios: 'HelveticaNeue'
+    },
+    HELVETICA_CONDENSED_BOLD: {
+        android: 'HelveticaNeue-CondensedBold',
+        ios: 'HelveticaNeue-CondensedBold'
+    },
+    HELVETICA_MEDIUM: {
+        android: 'HelveticaNeue-Medium',
+        ios: 'HelveticaNeue-Medium'
+    },
+}
+
 export {
     Logo,
     Delivery,
-    UserLogo
+    UserLogo,
+    FONT
 }  

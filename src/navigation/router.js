@@ -15,6 +15,7 @@ import AccountIcon from "../assets/icons/Account"
 import Signup from '../pages/signup';
 import Payment from '../pages/payment';
 import { COLOR } from '../utils/constants';
+import { AppStyles } from '../common/styles';
 
 const Stack = createNativeStackNavigator();
 const BottomStack = createNativeStackNavigator();
@@ -107,7 +108,7 @@ function Tabs() {
                 options={{
                     headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }} >Delivery</Text>),
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold', ...AppStyles.fontStyle }} >Delivery</Text>),
                     tabBarIcon: (({ focused, color, size }) => <Delivery color={focused ? COLOR.textColor : '#999'} />)
                 }}
             />
@@ -117,7 +118,7 @@ function Tabs() {
                 options={{
                     // headerShown: false,
                     gestureEnabled: false,
-                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }} >Cart</Text>),
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold', ...AppStyles.fontStyle }} >Cart</Text>),
                     tabBarIcon: (({ focused, color, size }) => <CartIcon color={focused ? COLOR.textColor : '#999'} />),
                     title: 'Your Cart',
                     headerTitleAlign: 'center',
@@ -132,7 +133,7 @@ function Tabs() {
                     headerShown: false,
                     gestureEnabled: false,
                     // tabBarLabel: 'Account',
-                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold' }}>Account</Text>),
+                    tabBarLabel: (({ focused, color, size }) => <Text style={{ color: focused ? COLOR.textColor : '#999', fontWeight: 'bold', ...AppStyles.fontStyle }}>Account</Text>),
                     tabBarIcon: (({ focused, color, size }) => <AccountIcon color={focused ? COLOR.textColor : '#999'} />)
                 }}
             />

@@ -101,7 +101,7 @@ const Cart = ({ navigation }) => {
 
                 {cartItems?.length > 0 ?
                     <View style={[AppStyles.shadow, { backgroundColor: COLOR.panelBackground, padding: 10, margin: 10, width: width - 45, borderRadius: 10 }]}>
-                        <Text style={{ color: COLOR.textColor }} variant="bodyLarge">Total Price:      Rs {totalPrice()}</Text>
+                        <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge">Total Price:      Rs {totalPrice()}</Text>
                     </View>
                     : null}
 
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     noItemView: {
         fontSize: 22,
         textAlign: 'center'
+        , ...AppStyles.fontStyle
 
     },
     noItem: {

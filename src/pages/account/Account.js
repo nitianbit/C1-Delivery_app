@@ -12,6 +12,7 @@ import User from '../../assets/icons/User'
 import { UserLogo } from '../../utils/constants'
 import BottomView from '../../components/BottomView'
 import TopView from '../../components/TopView'
+import { AppStyles } from '../../common/styles'
 
 
 
@@ -28,8 +29,8 @@ const Account = ({ navigation }) => {
 
             <TopView>
                 <Image style={{ height: 100, width: 100 }} source={UserLogo} />
-                <Text variant="titleLarge" style={{ color: COLOR.DARK, fontWeight: 'bold' }}>Hello {user?.name}!</Text>
-                <Text variant="bodyMedium" style={{ color: COLOR.DARK }}> {user?.email}</Text>
+                <Text variant="titleLarge" style={{ color: COLOR.DARK, fontWeight: 'bold', ...AppStyles.fontStyle }}>Hello {user?.name}!</Text>
+                <Text variant="bodyMedium" style={{ color: COLOR.DARK, ...AppStyles.fontStyle }}> {user?.email}</Text>
             </TopView>
 
 
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
     item: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: COLOR.textColor
+        color: COLOR.textColor,
+        ...AppStyles.fontStyle
     },
     user: {
         width: '100%',

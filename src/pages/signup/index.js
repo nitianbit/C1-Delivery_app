@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { addDetails } from '../../store/slices/user';
 import BottomView from '../../components/BottomView';
 import { useLoading } from '../../hooks';
+import { AppStyles } from '../../common/styles';
 
 
 
@@ -66,7 +67,7 @@ const Signup = ({ navigation }) => {
             <Image resizeMode='contain' style={styles.image} source={Delivery} />
 
             <BottomView>
-                <Text style={{ textAlign: 'center', marginVertical: 25, color: COLOR.textColor }} variant="titleLarge">Sign Up!</Text>
+                <Text style={{ textAlign: 'center', marginVertical: 25, color: COLOR.textColor, ...AppStyles.fontStyle }} variant="titleLarge">Sign Up!</Text>
                 <TextInput
                     label={<Text style={{ color: COLOR.textColor }}>Name</Text>}
                     value={data?.name}
@@ -107,7 +108,7 @@ const Signup = ({ navigation }) => {
                     Continue
                 </Button>
                 <TouchableOpacity style={styles.signupBtn} onPress={() => navigation.navigate(SCREEN.LOGIN)}>
-                    <Text style={{ color: COLOR.textColor }} variant="labelLarge" >Already have an account? Login</Text>
+                    <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="labelLarge" >Already have an account? Login</Text>
                 </TouchableOpacity>
 
                 <Portal>

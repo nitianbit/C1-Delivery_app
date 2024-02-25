@@ -92,7 +92,7 @@ const Payment = ({ navigation, route }) => {
     return (
         <Layout style={styles.container}>
             <ScrollView bounces={false} contentContainerStyle={styles.ScrollView} showsVerticalScrollIndicator={false}>
-                <Text style={{ textAlign: 'center', color: COLOR.textColor }} variant="titleMedium">Scan this QR code or copy the UPI for payment. After successful payment, send the screenshot to the WhatsApp number below.</Text>
+                <Text style={{ textAlign: 'center', color: COLOR.textColor, ...AppStyles.fontStyle }} variant="titleMedium">Scan this QR code or copy the UPI for payment. After successful payment, send the screenshot to the WhatsApp number below.</Text>
                 <View style={{ marginTop: 20 }} />
                 <QRCode
                     value={upi}
@@ -101,7 +101,7 @@ const Payment = ({ navigation, route }) => {
 
                 />
                 <View style={{ marginBottom: 20 }} />
-                <Text style={{ color: '#000' }} variant="bodyLarge">OR </Text>
+                <Text style={{ color: '#000', ...AppStyles.fontStyle }} variant="bodyLarge">OR </Text>
                 <TouchableOpacity style={styles.card} onPress={copyToClipboard}>
                     <View style={styles.content}>
                         <Text style={styles.text} variant="bodyLarge">UPI ID: {upi} </Text>
@@ -114,7 +114,7 @@ const Payment = ({ navigation, route }) => {
                         <ArrowRight />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={sendWhatsApp}>
+                <TouchableOpacity style={styles.card} >
                     <View style={styles.content}>
                         <Text style={styles.text} variant="bodyLarge">Payment Done </Text>
                         <Switch
@@ -187,6 +187,6 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     text: {
-        color: COLOR.textColor
+        color: COLOR.textColor, ...AppStyles.fontStyle
     }
 })

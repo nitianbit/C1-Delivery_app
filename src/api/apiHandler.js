@@ -41,9 +41,23 @@ export const ApiHandler = async ({ endPoint, method, reqParam, token = "" }) => 
             response = await fetch(endPoint, content);
         }
     } catch (e) {
-        console.log(e);
+        console.log("====", e);
+        error = true;
+
     } finally {
         // console.log(response)
+        if (error) {
+            response = {
+                data: {
+                    data: null,
+                    message: 'Network Error'
+                },
+                status: 500,
+                statusText: 'Network Error',
+                headers: null,
+            };
+            return response;
+        }
 
         if (response) {
             const resContentType = response.headers.get("content-type");

@@ -9,6 +9,7 @@ import { SCREEN } from '../../navigation/utils'
 import { useDispatch } from 'react-redux'
 import { addDetails } from '../../store/slices/user'
 import { width } from '../../utils/constants'
+import { AppStyles } from '../../common/styles'
 
 const Splash = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         color: '#000',
-        fontSize: 30,
+        fontSize: 30, ...AppStyles.fontStyle
 
 
     },
