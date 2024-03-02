@@ -1,5 +1,5 @@
 import { Dimensions } from "react-native"
-import Logo from '../assets/images/Logo.jpeg'
+import Logo from '../assets/images/newLogoSquare.jpeg'
 import Delivery from '../assets/images/Delivery.png'
 import UserLogo from '../assets/images/user-logo.png'
 

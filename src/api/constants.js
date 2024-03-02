@@ -8,8 +8,9 @@ export const API_METHODS = {
 
 
 
-export const baseUrl = `https://delivery-bac.onrender.com/api`
-// export const baseUrl = `http://192.168.43.210:5400/api`
+// export const baseUrl = `https://delivery-bac.onrender.com/api`
+export const baseUrl = `https://rotibasket.shop/api`
+// export const baseUrl = `http://192.168.1.5:5400/api`
 
 
 
@@ -23,6 +24,7 @@ export const ENDPOINTS = {
     orderCreate: `${baseUrl}/order/create`,
     menu: `${baseUrl}/menuItems/get`,
     userUpdate: `${baseUrl}/users/update`,
+    pincodes: `${baseUrl}/general/pincodes`,
 
 
 };

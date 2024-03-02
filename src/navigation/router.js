@@ -85,7 +85,7 @@ const StoreStackRouter = () => {
                 component={StoreDetail}
                 options={{
                     // headerShown: false,
-                    title: 'ChapatiBasket',
+                    title: 'Roti Basket',
                     gestureEnabled: false
                 }}
             />

@@ -30,7 +30,7 @@ const Dashboard = ({ navigation }) => {
                     <View style={styles.imageRow}>
                         <Image style={{ height: 80, width: 80, borderRadius: 20 }} source={Logo} />
                         <View style={{ flexShrink: 1, marginLeft: 10 }}>
-                            <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="titleLarge">ChapatiBasket</Text>
+                            <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="titleLarge">Roti Basket</Text>
                             <Text numberOfLines={2} variant="bodyMedium" style={styles.desc}>{/* ChapatiBasket is a mobile application that allows users to order and purchase chapati, a traditional Indian flatbread. */} The app offers a variety of chapati options and allows for easy and convenient ordering and payment</Text>
                         </View>
                     </View>
