@@ -9,6 +9,7 @@ import BottomView from '../../components/BottomView';
 import CartItem from '../../components/CartItem';
 import Layout from '../../components/layout';
 import TopView from '../../components/TopView';
+import TotalPrice from '../../components/TotalPrice';
 import { SCREEN } from '../../navigation/utils';
 import { COLOR, Logo, width } from '../../utils/constants';
 
@@ -53,11 +54,7 @@ const StoreDetail = ({ navigation }) => {
                     data={data}
                     renderItem={({ item, index }) => <CartItem key={index} {...item} />}
                 />
-                {cartItems?.length > 0 ?
-                    <View style={[AppStyles.shadow, { backgroundColor: COLOR.panelBackground, padding: 10, margin: 10, width: width - 45, borderRadius: 10 }]}>
-                        <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge">Total Price:      Rs {totalPrice()}</Text>
-                    </View>
-                    : null}
+                <TotalPrice />
 
                 {cartItems?.length > 0 ? <Button textColor='#fff' buttonColor={COLOR.THEME_COLOR} disabled={!cartItems.length} style={styles.btn} mode="contained" onPress={() => navigation.navigate(SCREEN.CART)}>
                     Checkout

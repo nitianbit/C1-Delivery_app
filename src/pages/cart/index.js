@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Image, StyleSheet, TouchableOpacity, View, TextInput as Input } from 'react-native';
 import { Button, Dialog, Portal, Text, Card, TextInput, Searchbar } from 'react-native-paper';
-import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { ENDPOINTS } from '../../api/constants';
 import { doGET, doPOST } from '../../api/httpUtil';
@@ -15,6 +14,10 @@ import TopView from '../../components/TopView';
 import { SCREEN } from '../../navigation/utils';
 import { emptyCart } from '../../store/slices/items';
 import { COLOR, Logo, width } from '../../utils/constants';
+import ArrowRight from '../../assets/icons/ArrowRight'
+import { formatDateTime, getCurrentDate, getCurrentTime, getLatestInterval, getNext10Days, getOrderTimeIntervals } from '../../utils/helper';
+import TotalPrice from '../../components/TotalPrice';
+import moment from 'moment';
 
 const phoneRegex = /^[6-9]\d{9}$/
 
@@ -31,6 +34,7 @@ const Cart = ({ navigation }) => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+    const [dateSelectVisible, setDateSelectVisible] = useState(false);
     const [addressDetails, setAddressDetails] = useState({
         number: null,
         area: '',
@@ -40,6 +44,12 @@ const Cart = ({ navigation }) => {
     const [data, setData] = useState([]);
     const pincodeDataRef = useRef(null);
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [dates, setDates] = useState(getNext10Days());
+    const [timeIntervals, setTimeIntervals] = useState(getOrderTimeIntervals());
+    const [orderTime, setOrderTime] = useState({
+        date: getCurrentDate(),
+        time: getOrderTimeIntervals().currentIntervals[0]
+    });
 
     const isNextDisabled = () => (!addressDetails?.number || !addressDetails?.area || !addressDetails?.pinCode || !phone)
 
@@ -72,14 +82,24 @@ const Cart = ({ navigation }) => {
         }
     }, [phone])
 
+    useEffect(() => {
+        setTimeIntervals(getOrderTimeIntervals());
+        // setOrderTime((prev) => ({
+        //     ...prev,
+        //     time: prev?.date === getCurrentDate() ? getOrderTimeIntervals().currentIntervals[0] : getOrderTimeIntervals().futureIntervals[0]
+        // }))
+    }, [orderTime?.date, dateSelectVisible]);
+
+
 
     const handleContinue = async () => {
         try {
             if (!cartItems.length || isNextDisabled() /* !address || !phone */) {
+                console.log("===", isNextDisabled())
                 return;
             }
             const addr = addressDetails?.number + ", " + addressDetails?.area + ", " + addressDetails?.pinCode
-            navigation.navigate(SCREEN.PAYMENT, { address: addr, phone });
+            navigation.navigate(SCREEN.PAYMENT, { address: addr, phone, orderDate: moment(`${orderTime?.date},${orderTime.time}`, 'YYYYMMDD,HH:mm').unix() });
             return;
             const response = await doPOST(ENDPOINTS.orderCreate, cartItems);
 
@@ -97,11 +117,10 @@ const Cart = ({ navigation }) => {
                 //   navigation.navigate(SCREEN.TABS)
             }
         } catch (error) {
-
+            console.log(error)
         }
     }
 
-    const totalPrice = () => cartItems?.reduce((total, curr) => total + curr.quantity * curr.price, 0);
 
     const toggleDetailModalVisible = () => {
         setDetailsModalVisible(prev => !prev)
@@ -127,11 +146,27 @@ const Cart = ({ navigation }) => {
                     </View>}
                 />
 
-                {cartItems?.length > 0 ?
-                    <View style={[AppStyles.shadow, { backgroundColor: COLOR.panelBackground, padding: 10, margin: 10, width: width - 45, borderRadius: 10 }]}>
-                        <Text style={{ color: COLOR.textColor, ...AppStyles.fontStyle }} variant="bodyLarge">Total Price:      Rs {totalPrice()}</Text>
+                <TotalPrice />
+                {cartItems?.length > 0 ? <TouchableOpacity style={styles.orderDateSelectorView} onPress={() => setDateSelectVisible(true)}>
+                    <Text style={styles.orderDateSelector}>Select Order Date & Time</Text>
+                    <View style={styles.orderDateView}>
+                        <View style={styles.orderDateItem}  /* onPresss={() => setDateSelectVisible(true)} */>
+                            <Text style={styles.orderItemText}>{formatDateTime(orderTime?.date, 'YYYYMMDD', 'DD/MM/YY')}</Text>
+                        </View>
+                        <View style={styles.orderDateItem}>
+                            <Text style={styles.orderItemText}>{orderTime?.time}</Text>
+                        </View>
                     </View>
-                    : null}
+                    {/* <Input
+                        style={styles.orderDateSelector}
+                        placeholder="Select Order Date"
+                        onChangeText={setSearchQuery}
+                        value={searchQuery}
+                        placeholderTextColor={COLOR.textColor}
+                        keyboardType="number-pad"
+                        pointerEvents='none'
+                    /> */}
+                </TouchableOpacity> : null}
 
                 {cartItems?.length > 0 ? <Button buttonColor={COLOR.DARK} textColor={COLOR.CREAM_WHITE} style={[styles.btn, { opacity: (!cartItems.length /* || !address || !phone */) ? 0.4 : 1 }]} mode="contained" onPress={toggleDetailModalVisible/* handleContinue */}>
                     Enter Details
@@ -237,6 +272,44 @@ const Cart = ({ navigation }) => {
                     />
                 </View>
             </BottomModal>
+            <BottomModal
+                title='Select Order Date'
+                closeAble={true}
+                visible={dateSelectVisible}
+                onClose={() => setDateSelectVisible(false)} >
+                <View style={{ width: width - 40, height: 300, ...styles.timePicker }}>
+                    <View style={styles.timePickerCol}>
+                        <Text style={styles.orderDateHeader}>Select Date</Text>
+                        <FlatList
+                            data={dates}
+                            renderItem={({ item, index }) => (
+                                <TouchableOpacity key={index} style={[styles.pincodes, { borderColor: item.value === orderTime?.date ? COLOR.textColor : COLOR.panelBackground, borderWidth: 1 }]} onPress={() => {
+                                    setOrderTime(prev => ({ ...prev, date: item.value }))
+                                }}>
+                                    <Text style={styles.pincodeText}>{item?.key}</Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                    <View style={styles.timePickerCol}>
+                        <Text style={styles.orderDateHeader}>Select Time</Text>
+                        <FlatList
+                            data={orderTime?.date === getCurrentDate() ? timeIntervals.currentIntervals : timeIntervals.futureIntervals}
+                            renderItem={({ item, index }) => (
+                                <TouchableOpacity key={index} style={[styles.pincodes, { borderColor: item === orderTime?.time ? COLOR.textColor : COLOR.panelBackground, borderWidth: 1 }]} onPress={() => {
+                                    setOrderTime(prev => ({ ...prev, time: item }));
+
+                                }}>
+                                    <Text style={styles.pincodeText}>{item}</Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                </View>
+                <Button buttonColor={COLOR.DARK} textColor={COLOR.CREAM_WHITE} style={[styles.btn]} mode="contained" onPress={() => setDateSelectVisible(false)}>
+                    Select
+                </Button>
+            </BottomModal>
 
         </Layout>
     )
@@ -309,5 +382,49 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         paddingHorizontal: 10,
         fontWeight: '500'
+    },
+    orderDateSelector: {
+        fontWeight: '500',
+        color: COLOR.textColor,
+        fontSize: 15
+    },
+    orderDateSelectorView: {
+        ...AppStyles.shadow,
+        backgroundColor: COLOR.panelBackground,
+        borderRadius: 10,
+        paddingHorizontal: 5,
+        width: width - 45,
+        marginBottom: 10,
+        paddingVertical: 10
+    },
+    orderDateView: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingTop: 10,
+    },
+    orderDateItem: {
+        borderWidth: 1,
+        width: '48%',
+        borderRadius: 5,
+        paddingVertical: 5,
+        borderColor: COLOR.textColor
+    },
+    orderItemText: {
+        textAlign: 'center',
+        color: COLOR.textColor,
+        fontWeight: '500'
+    },
+    timePicker: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    timePickerCol: {
+        width: '49%'
+    },
+    orderDateHeader: {
+        color: COLOR.textColor,
+        fontWeight: '600',
+        textAlign: 'center'
     }
 }) 

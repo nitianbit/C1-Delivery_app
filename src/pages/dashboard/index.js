@@ -8,13 +8,14 @@ import Banner from '../../assets/images/Logo.jpeg'
 import BottomView from '../../components/BottomView';
 import TopView from '../../components/TopView';
 import { AppStyles } from '../../common/styles';
+import useBackHandler from '../../hooks/useBackHandler';
 
 
 
 
 
 const Dashboard = ({ navigation }) => {
-
+    useBackHandler(true)
     const handleChange = () => navigation.navigate(SCREEN.STOREDETAIL);
 
 

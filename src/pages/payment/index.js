@@ -36,7 +36,7 @@ const Payment = ({ navigation, route }) => {
     const [upi, setUpi] = useState('9971164333@paytm');
     const [paymentDone, setpaymentDone] = React.useState(false);
 
-    let phoneNumber = '9971164333'
+    let phoneNumber = '919971164333'
     const whatsAppUrl = `https://wa.me/${phoneNumber}`;
 
 
@@ -63,7 +63,7 @@ const Payment = ({ navigation, route }) => {
             }
             toggleLoading(true)
             const items = cartItems?.map(item => ({ menuItemId: item._id, quantity: item.quantity, name: item.name }));
-            const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address, phoneNo: route?.params?.phone });
+            const response = await doPOST(ENDPOINTS.orderCreate, { items, address: route?.params?.address, phoneNo: route?.params?.phone, orderDate: route?.params?.orderDate });
 
             if (response?.data?.status >= 400) {
                 setError(response.data?.message)

@@ -23,6 +23,7 @@ const Orders = () => {
         try {
             toggleLoading(true);
             const orders = await doGET(ENDPOINTS.orders);
+            console.log(orders?.data?.data)
             setData(orders.data?.data)
         } catch (error) {
 

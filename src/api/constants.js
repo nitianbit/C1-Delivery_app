@@ -10,7 +10,7 @@ export const API_METHODS = {
 
 // export const baseUrl = `https://delivery-bac.onrender.com/api`
 export const baseUrl = `https://rotibasket.shop/api`
-// export const baseUrl = `http://192.168.1.5:5400/api`
+// export const baseUrl = `http://192.168.1.6:5400/api`
 
 
 

@@ -7,7 +7,7 @@ import { addToCart, removeFromCart } from '../../store/slices/items';
 import { COLOR, FONT, width } from '../../utils/constants';
 
 
-const CartItem = ({ name, description, _id, price }) => {
+const CartItem = ({ name, description, _id, price, gst, maxQuantity }) => {
     const cartItems = useSelector((state) => state.cart.items)
     const dispatch = useDispatch();
 
@@ -42,11 +42,11 @@ const CartItem = ({ name, description, _id, price }) => {
                     <TouchableOpacity style={styles.btn} disabled>
                         <Text variant="bodyMedium" style={styles.btnText}>{item?.quantity}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id, price }))} style={[styles.btn, styles.endBtn]}>
+                    <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id, price, gst, maxQuantity }))} style={[styles.btn, styles.endBtn]}>
                         <Text style={styles.btnText}>+</Text>
                     </TouchableOpacity>
                 </> :
-                    <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id, price }))} style={[styles.btn, styles.endBtn, styles.startBtn, { paddingHorizontal: 20 }]}>
+                    <TouchableOpacity onPress={() => dispatch(addToCart({ name, description, _id, price, gst, maxQuantity }))} style={[styles.btn, styles.endBtn, styles.startBtn, { paddingHorizontal: 20 }]}>
                         <Text variant="bodyMedium" style={styles.btnText}>Add</Text>
                     </TouchableOpacity>}
             </View>
