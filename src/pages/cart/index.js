@@ -169,7 +169,7 @@ const Cart = ({ navigation }) => {
                 </TouchableOpacity> : null}
 
                 {cartItems?.length > 0 ? <Button buttonColor={COLOR.DARK} textColor={COLOR.CREAM_WHITE} style={[styles.btn, { opacity: (!cartItems.length /* || !address || !phone */) ? 0.4 : 1 }]} mode="contained" onPress={toggleDetailModalVisible/* handleContinue */}>
-                    Enter Details
+                    Enter Delivery Address
                 </Button> : null}
                 <Portal>
                     <Dialog visible={visible} onDismiss={hideDialog}>
@@ -184,7 +184,7 @@ const Cart = ({ navigation }) => {
                 </Portal>
             </BottomView>
             <BottomModal
-                title='Enter Details'
+                title='Enter Delivery Address'
                 closeAble={true}
                 visible={detailsModalVisible}
                 onClose={toggleDetailModalVisible} >
