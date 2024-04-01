@@ -26,7 +26,7 @@ const Dashboard = ({ navigation }) => {
                 <Image source={Logo} style={styles.banner} />
 
             </TopView>
-            <BottomView>
+            <BottomView zeroPadding={true}>
                 <TouchableOpacity onPress={handleChange} style={styles.card}>
                     <View style={styles.imageRow}>
                         <Image style={{ height: 80, width: 80, borderRadius: 20 }} source={Logo} />
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         // bottom: 20
     },
     card: {
-        width: width - 45,
+        width: width - 15,
         marginVertical: 10,
         marginVertical: 10,
         backgroundColor: COLOR.panelBackground,
