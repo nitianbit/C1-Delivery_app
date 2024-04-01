@@ -4,10 +4,10 @@ import { COLOR, width } from '../../utils/constants'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { AppStyles } from '../../common/styles'
 
-const BottomView = ({ children }) => {
+const BottomView = ({ children, zeroPadding = false }) => {
     return (
-        <View style={styles.bottomView}>
-            <KeyboardAwareScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false} bounces={false}>
+        <View style={[styles.bottomView, { paddingHorizontal: zeroPadding ? 0 : 20 }]}>
+            <KeyboardAwareScrollView contentContainerStyle={[styles.scrollView, { width: width - (zeroPadding ? 0 : 40) }]} showsVerticalScrollIndicator={false} bounces={false}>
                 {children}
             </KeyboardAwareScrollView>
         </View>
