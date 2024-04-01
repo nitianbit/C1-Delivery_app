@@ -45,7 +45,7 @@ const Splash = ({ navigation }) => {
 
     return (
         <Layout style={styles.container}>
-            <Text style={styles.text}>Welcome to</Text>
+            // <Text style={styles.text}>Welcome to</Text>
             <Text style={styles.text}>Roti Basket</Text>
             <Image style={styles.image} source={require('../../assets/images/newLogoSquare.jpeg')} />
         </Layout>
